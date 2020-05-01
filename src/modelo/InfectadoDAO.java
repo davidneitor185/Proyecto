@@ -68,16 +68,15 @@ public class InfectadoDAO extends PersonaDAO {
         try{
             con = Fachada.getConnection();
             String sql = "UPDATE infectado " +
-                         "SET estado = ?, fecha_d = ?, id_infectado = ?, " +
-                         ", id_persona = ?, pais_pro = ?, tipo_cont = ? "
+                         "SET estado = ?, fecha_d = ?" +
+                         ", pais_pro = ?, tipo_cont = ? "
                     +    "WHERE id_infectado = ?";
             pstm = con.prepareStatement(sql);            
             pstm.setString(1, inf.getEstado());
             pstm.setString(2, inf.getFecha_D());
-            pstm.setString(3, inf.getId_Infectado());
-            pstm.setString(4, inf.getId());
-            pstm.setString(5, inf.getPais_Pro());
-            pstm.setString(6, inf.getTipo_cont());
+            pstm.setString(3, inf.getPais_Pro());
+            pstm.setString(4, inf.getTipo_cont());
+            pstm.setString(5, inf.getId_Infectado());
             rtdo = pstm.executeUpdate();  
         }
         catch(SQLException ex){
@@ -146,7 +145,7 @@ public class InfectadoDAO extends PersonaDAO {
             if(id.equalsIgnoreCase("0")){
                 sql = "SELECT * FROM infectado JOIN persona on infectado.id_persona=persona.id ORDER BY id_infectado";            
             }else{
-                sql = "SELECT * FROM infectado where id_infectado = ? JOIN persona on infectado.id_persona=persona.id"
+                sql = "SELECT * FROM infectado JOIN persona on infectado.id_persona=persona.id where id_infectado = ?"
                     + "ORDER BY id_infectado";      
             }                        
             pstm = con.prepareStatement(sql);

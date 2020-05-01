@@ -1,12 +1,13 @@
 package Vista;
 
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Infectado;
-import modelo.Persona;
 
 /**
  *
@@ -20,6 +21,9 @@ public class InfectadoIG extends javax.swing.JInternalFrame {
     public InfectadoIG() {
         initComponents();
         mTabla =(DefaultTableModel) tblPersonas.getModel();
+        mCiudad = (DefaultComboBoxModel)cmbCiudad.getModel();
+        dpkFechaDiag.setFormats("dd/MM/yyyy");
+        cmbDepar.setActionCommand("depar");
     }
     
     public String getId(){
@@ -51,7 +55,7 @@ public class InfectadoIG extends javax.swing.JInternalFrame {
     }
     
     public String getFechaDiag(){
-        return jTextFechaDiag.getText().trim();
+        return dpkFechaDiag.getDate().toString();
     }
     
     public String getPaisProc(){
@@ -59,11 +63,11 @@ public class InfectadoIG extends javax.swing.JInternalFrame {
     }
     
     public String getEstado(){
-        return jTextEstado.getText().trim();
+        return cmbEstado.getSelectedItem().toString();
     }
     
     public String getTipoCont(){
-        return jTextTipoC.getText().trim();
+        return cmbTipo.getSelectedItem().toString();
     }
     
     public void limpiarTabla (){
@@ -71,6 +75,13 @@ public class InfectadoIG extends javax.swing.JInternalFrame {
         for(int i=mTabla.getRowCount()-1; i>=0 ; i--){
             mTabla.removeRow(i);
         }
+    }
+    
+    public void cargarMunicipio(ArrayList<String> listMuni){
+        mCiudad.removeAllElements();
+        for (int i=0; i< listMuni.size();i++){
+            mCiudad.addElement(listMuni.get(i));
+      }
     }
     
     public void cargarInfectados(ArrayList<Infectado> listInfectados){
@@ -92,8 +103,10 @@ public class InfectadoIG extends javax.swing.JInternalFrame {
         }
     }
     
-
-    
+    public void addListenerCmbDepar(ActionListener listenPersona){
+        cmbDepar.addActionListener(listenPersona);
+    }
+        
     public void addListenerBtnNuevo(ActionListener listenPersona){
         btnNuevo.addActionListener(listenPersona);
     }
@@ -116,6 +129,7 @@ public class InfectadoIG extends javax.swing.JInternalFrame {
         btnNuevo.setText("Nuevo");
         btnNuevo.setActionCommand("nuevo");
         txtId.setEnabled(true);
+        jTextCaso.setEnabled(true);
         tblPersonas.clearSelection();
         limpiarDatos();
     }
@@ -131,9 +145,9 @@ public class InfectadoIG extends javax.swing.JInternalFrame {
     public boolean revisaDatos(){
         if (txtNombre.getText().replaceAll(" ", "").isEmpty()||txtId.getText().replaceAll(" ", "").isEmpty()||
                 txtEdad.getText().replaceAll(" ", "").isEmpty()|| cmbDepar.getSelectedIndex() == 0
-                ||jTextCaso.getText().replaceAll(" ", "").isEmpty()||jTextEstado.getText().replaceAll(" ", "").isEmpty()
-                ||jTextFechaDiag.getText().replaceAll(" ", "").isEmpty()||jTextPaisProc.getText().replaceAll(" ", "").isEmpty()
-                ||jTextTipoC.getText().replaceAll(" ", "").isEmpty()){
+                ||jTextCaso.getText().replaceAll(" ", "").isEmpty()||cmbEstado.getSelectedIndex() == 0
+                ||dpkFechaDiag.getDate() == null||jTextPaisProc.getText().replaceAll(" ", "").isEmpty()
+                ||cmbTipo.getSelectedIndex() == 0){
             JOptionPane.showMessageDialog(this,"Datos incompletos, por favor llene todos lo campos");
             return false;
         }
@@ -153,8 +167,14 @@ public class InfectadoIG extends javax.swing.JInternalFrame {
         cmbCiudad.setSelectedIndex(0);
         txtNombre.requestFocus();
         jTextCaso.setText("");
-        jTextEstado.setText("");
-        
+        cmbEstado.setSelectedIndex(0);
+        dpkFechaDiag.setDate(null);
+        jTextPaisProc.setText("");
+        cmbTipo.setSelectedIndex(0);
+    }
+    
+    public int deparSelec(){
+        return cmbDepar.getSelectedIndex();
     }
 
     /**
@@ -188,13 +208,14 @@ public class InfectadoIG extends javax.swing.JInternalFrame {
         jTextCaso = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextFechaDiag = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jTextPaisProc = new javax.swing.JTextField();
-        jTextTipoC = new javax.swing.JTextField();
-        jTextEstado = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        dpkFechaDiag = new org.jdesktop.swingx.JXDatePicker();
+        cmbEstado = new javax.swing.JComboBox<>();
+        cmbTipo = new javax.swing.JComboBox<>();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
 
         setClosable(true);
         setResizable(true);
@@ -220,19 +241,14 @@ public class InfectadoIG extends javax.swing.JInternalFrame {
             }
         });
 
-        cmbSexo.setEditable(true);
         cmbSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "M", "F" }));
 
-        cmbDepar.setEditable(true);
         cmbDepar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Amazonas", "Antioquia", "Arauca", "Atlántico", "Bolívar", "Boyacá", "Caldas", "Caquetá", "Casanare", "Cauca", "Cesar", "Chocó", "Córdoba", "Cundinamarca", "Guainía", "Guaviare", "Huila", "La Guajira", "Magdalena", "Meta", "Nariño", "Norte de Santander", "Putumayo", "Quindío", "Risaralda", "San Andrés y Providencia", "Santander", "Sucre", "Tolima", "Valle del Cauca", "Vaupés", "Vichada" }));
         cmbDepar.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cmbDeparItemStateChanged(evt);
             }
         });
-
-        cmbCiudad.setEditable(true);
-        cmbCiudad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Cualquier ciudad" }));
 
         javax.swing.GroupLayout panDatosLayout = new javax.swing.GroupLayout(panDatos);
         panDatos.setLayout(panDatosLayout);
@@ -241,31 +257,30 @@ public class InfectadoIG extends javax.swing.JInternalFrame {
             .addGroup(panDatosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblNombre)
-                    .addComponent(lblId)
-                    .addComponent(lblDeparta))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panDatosLayout.createSequentialGroup()
-                        .addComponent(cmbDepar, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblCiudadO)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmbCiudad, 0, 91, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panDatosLayout.createSequentialGroup()
+                        .addGroup(panDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblNombre)
+                            .addComponent(lblId))
+                        .addGap(28, 28, 28)
+                        .addGroup(panDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtNombre)
+                            .addComponent(txtId))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(panDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(panDatosLayout.createSequentialGroup()
-                                .addComponent(txtId)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lblEdad))
-                            .addComponent(txtNombre))
+                            .addComponent(lblSexo)
+                            .addComponent(lblEdad))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(panDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(panDatosLayout.createSequentialGroup()
-                                .addComponent(lblSexo)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cmbSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtEdad))))
+                            .addComponent(cmbSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtEdad)))
+                    .addGroup(panDatosLayout.createSequentialGroup()
+                        .addComponent(lblDeparta)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmbDepar, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblCiudadO)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmbCiudad, 0, 136, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         panDatosLayout.setVerticalGroup(
@@ -273,24 +288,23 @@ public class InfectadoIG extends javax.swing.JInternalFrame {
             .addGroup(panDatosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblNombre)
                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cmbSexo)
-                    .addComponent(lblSexo))
+                    .addComponent(lblSexo)
+                    .addComponent(lblNombre))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblId)
                     .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblEdad)
                     .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(panDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lblDeparta)
-                        .addComponent(cmbDepar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lblCiudadO))
-                    .addComponent(cmbCiudad, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(41, 41, 41))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(panDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblDeparta)
+                    .addComponent(cmbDepar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblCiudadO))
+                .addGap(17, 17, 17))
         );
 
         tblPersonas.setModel(new javax.swing.table.DefaultTableModel(
@@ -317,9 +331,11 @@ public class InfectadoIG extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(tblPersonas);
         if (tblPersonas.getColumnModel().getColumnCount() > 0) {
-            tblPersonas.getColumnModel().getColumn(1).setMinWidth(200);
-            tblPersonas.getColumnModel().getColumn(2).setMaxWidth(60);
+            tblPersonas.getColumnModel().getColumn(0).setMaxWidth(60);
+            tblPersonas.getColumnModel().getColumn(1).setMaxWidth(100);
+            tblPersonas.getColumnModel().getColumn(2).setMinWidth(200);
             tblPersonas.getColumnModel().getColumn(3).setMaxWidth(60);
+            tblPersonas.getColumnModel().getColumn(4).setMaxWidth(60);
         }
 
         btnNuevo.setText("Nuevo");
@@ -343,6 +359,16 @@ public class InfectadoIG extends javax.swing.JInternalFrame {
 
         jLabel5.setText("Tipo de contagio");
 
+        dpkFechaDiag.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dpkFechaDiagActionPerformed(evt);
+            }
+        });
+
+        cmbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Fallecido", "Grave", "Leve", "Moderado" }));
+
+        cmbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Importado", "Relacionado" }));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -350,56 +376,54 @@ public class InfectadoIG extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(73, 73, 73)
-                        .addComponent(jTextCaso, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel4)
-                        .addGap(20, 20, 20)
-                        .addComponent(jTextEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(dpkFechaDiag, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
+                                .addComponent(jTextCaso, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextPaisProc, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextFechaDiag, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(8, 8, 8)
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextTipoC, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                                .addComponent(cmbTipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(cmbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextPaisProc, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel4)
-                        .addComponent(jTextEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextCaso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel1))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(jTextTipoC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextFechaDiag, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jTextCaso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5)
+                    .addComponent(cmbTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(cmbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
                     .addComponent(jTextPaisProc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(dpkFechaDiag, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -413,11 +437,11 @@ public class InfectadoIG extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1)
                         .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(panDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(panDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnBorrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -427,18 +451,22 @@ public class InfectadoIG extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(panDatos, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnNuevo)
                         .addGap(18, 18, 18)
                         .addComponent(btnModificar)
                         .addGap(18, 18, 18)
-                        .addComponent(btnBorrar))
-                    .addComponent(panDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnBorrar)
+                        .addGap(18, 18, 18)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -456,6 +484,7 @@ public class InfectadoIG extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(this,"No hay registros");
             }
         }else {
+            DateFormat fecha = new SimpleDateFormat("dd/MM/yyyy");
             jTextCaso.setText(tblPersonas.getValueAt(sel, 0).toString());
             jTextCaso.setEnabled(false);
             txtId.setText(tblPersonas.getValueAt(sel, 1).toString());
@@ -465,10 +494,10 @@ public class InfectadoIG extends javax.swing.JInternalFrame {
             cmbSexo.setSelectedItem(tblPersonas.getValueAt(sel, 4).toString());
             cmbDepar.setSelectedItem(tblPersonas.getValueAt(sel, 5).toString());
             cmbCiudad.setSelectedItem(tblPersonas.getValueAt(sel, 6).toString());
-            jTextEstado.setText(tblPersonas.getValueAt(sel, 7).toString());
-            jTextFechaDiag.setText(tblPersonas.getValueAt(sel, 8).toString());
+            cmbEstado.setSelectedItem(tblPersonas.getValueAt(sel, 7).toString());
+            //dpkFechaDiag.setDate(fecha.parse(tblPersonas.getValueAt(sel, 8).toString()));
             jTextPaisProc.setText(tblPersonas.getValueAt(sel, 9).toString());
-            jTextTipoC.setText(tblPersonas.getValueAt(sel, 10).toString());
+            cmbTipo.setSelectedItem(tblPersonas.getValueAt(sel, 10).toString());
             btnModificar.setEnabled(true);
             btnBorrar.setEnabled(true);
             btnNuevo.setText("Cancelar");
@@ -484,6 +513,10 @@ public class InfectadoIG extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreActionPerformed
 
+    private void dpkFechaDiagActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dpkFechaDiagActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dpkFechaDiagActionPerformed
+
 
 
     
@@ -496,7 +529,11 @@ public class InfectadoIG extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnNuevo;
     private javax.swing.JComboBox<String> cmbCiudad;
     private javax.swing.JComboBox<String> cmbDepar;
+    private javax.swing.JComboBox<String> cmbEstado;
     private javax.swing.JComboBox<String> cmbSexo;
+    private javax.swing.JComboBox<String> cmbTipo;
+    private org.jdesktop.swingx.JXDatePicker dpkFechaDiag;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -505,10 +542,7 @@ public class InfectadoIG extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextCaso;
-    private javax.swing.JTextField jTextEstado;
-    private javax.swing.JTextField jTextFechaDiag;
     private javax.swing.JTextField jTextPaisProc;
-    private javax.swing.JTextField jTextTipoC;
     private javax.swing.JLabel lblCiudadO;
     private javax.swing.JLabel lblDeparta;
     private javax.swing.JLabel lblEdad;

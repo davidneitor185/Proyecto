@@ -5,18 +5,6 @@
  */
 package Controlador;
 
-/* ArrayList<Persona> listp = listadoPersonas("0");
-            for(int i=0;i<listp.size();i++)
-            {
-            Persona p=listp.get(i);
-                        
-            listado.get(i).setId(p.getId());
-            listado.get(i).setNombre(p.getNombre());
-            listado.get(i).setSexo(p.getSexo()); 
-            listado.get(i).setDepartamento(p.getDepartamento());
-            listado.get(i).setCiudad_O(p.getCiudad_O());
-            
-            }*/
 
 import Vista.InfectadoIG;
 import java.util.ArrayList;
@@ -26,19 +14,22 @@ import javax.swing.JOptionPane;
 import modelo.*;
 /**
  *
- * @author Santiago
+ * @author Santiago y Victor
  */
 public class InfectadoControlador {
     private InfectadoDAO modelo;
     private InfectadoIG vista;
+    private MunicipioDAO muni;
     
-     public InfectadoControlador(InfectadoDAO modelo, InfectadoIG vista) {
+    public InfectadoControlador(InfectadoDAO modelo, InfectadoIG vista) {
         this.modelo = modelo;
         this.vista = vista;
+        muni = new MunicipioDAO();
         
         this.vista.addListenerBtnNuevo(new PersonaListener());
         this.vista.addListenerBtnModificar(new PersonaListener());
         this.vista.addListenerBtnBorrar(new PersonaListener());
+        this.vista.addListenerCmbDepar(new PersonaListener());
         
         ArrayList <Infectado> listaInfec;
         listaInfec = this.modelo.listadoInf("0");
@@ -47,7 +38,7 @@ public class InfectadoControlador {
         
     }
      
-      class PersonaListener implements ActionListener {
+    class PersonaListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             
@@ -59,12 +50,14 @@ public class InfectadoControlador {
                 eliminar();
             }else if(e.getActionCommand().equalsIgnoreCase("cancelar")){
                 vista.cancelarAction();
-            }
-            
-        }}
+            }else if(e.getActionCommand().equalsIgnoreCase("depar")){
+                municipios();
+            }   
+        }
+    
       
       
-      public void cargar(){
+        public void cargar(){
             if (vista.revisaDatos()){
                 Infectado inf = new Infectado();
                 inf.setId(vista.getId());
@@ -79,9 +72,10 @@ public class InfectadoControlador {
                 inf.setPais_Pro(vista.getPaisProc());
                 inf.setTipo_cont(vista.getTipoCont());
                 
-                int existe = modelo.listadoPersonas(inf.getId()).size();
+                int existeInf = modelo.listadoInf(inf.getId_Infectado()).size();
+                int existePer = modelo.listadoPersonas(inf.getId()).size();
                 
-                if(existe == 0){
+                if(existeInf == 0 && existePer == 0){
                     
                     int resultado2 = modelo.guardarPersona2(inf);
                     int resultado = modelo.grabarInf(inf);
@@ -96,13 +90,18 @@ public class InfectadoControlador {
                                 "Confirmación",JOptionPane.ERROR_MESSAGE);                                                 
                     }
                 }else{
-                    vista.gestionMensajes("CC ya está registrada",
-                            "Confirmación", JOptionPane.ERROR_MESSAGE);                                      
+                    if (existePer > 0){
+                        vista.gestionMensajes("Ya existe una PERSONA con ese DOCUMENTO",
+                                "Confirmación", JOptionPane.ERROR_MESSAGE);
+                    }else{
+                        vista.gestionMensajes("Ya existe un CASO con ese NUMERO",
+                                "Confirmación", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             }
         }
       
-             public void eliminar(){
+        public void eliminar(){
             int respuesta = JOptionPane.showConfirmDialog(null,
                     "¿Desea Eliminar el infectado con C: " +
                     vista.getId()+ "?", 
@@ -124,7 +123,7 @@ public class InfectadoControlador {
             }
         }
              
-          public void modifica(){
+        public void modifica(){
             if (vista.revisaDatos()){
                 Infectado inf = new Infectado();
                 inf.setId(vista.getId());
@@ -138,19 +137,24 @@ public class InfectadoControlador {
                 inf.setId_Infectado(vista.getIdInfec());
                 inf.setPais_Pro(vista.getPaisProc());
                 inf.setTipo_cont(vista.getTipoCont());
-
-
-                int resultado= modelo.modificarInf(inf);
-                int resultado2=modelo.modificarPersona(inf);
-                if(resultado==1&&resultado2==1){
+                
+                if(modelo.modificarPersona2(inf) == 1&&modelo.modificarInf(inf)==1){
                     vista.gestionMensajes("Actualización exitosa",
                             "Confirmación ", JOptionPane.INFORMATION_MESSAGE); 
                     vista.cancelarAction();
-                    //vista.cargarPersonas(modelo.listadoPersonas("0"));
+                    vista.cargarInfectados(modelo.listadoInf("0"));
+                    //vista.cargarPersonas(modelo.listadoPersonas("0"));           
                 } else {
                     vista.gestionMensajes("Actualización Falida",
                             "Confirmación ", JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
+        
+        public void municipios(){
+            ArrayList <String> listMuni;
+            listMuni = muni.listadoMuni(vista.deparSelec());
+            vista.cargarMunicipio(listMuni);
+        }
+    }
 }
