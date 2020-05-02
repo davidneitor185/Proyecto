@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import modelo.*;
+import vista.RelacionadoIG;
 /**
  *
  * @author Santiago y Victor
@@ -52,9 +53,17 @@ public class InfectadoControlador {
                 vista.cancelarAction();
             }else if(e.getActionCommand().equalsIgnoreCase("depar")){
                 municipios();
+            }else if(e.getActionCommand().equalsIgnoreCase("Relacionado")){
+                relacionado();
             }   
         }
-    
+        
+        public void relacionado(){
+         RelacionadoIG vista = new RelacionadoIG();
+         vista.setVisible(true);
+         RelacionadoDAO modelo = new RelacionadoDAO();
+         //here
+         }    
       
       
         public void cargar(){

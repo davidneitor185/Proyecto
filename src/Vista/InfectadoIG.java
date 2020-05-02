@@ -119,6 +119,10 @@ public class InfectadoIG extends javax.swing.JInternalFrame {
         btnBorrar.addActionListener(listenPersona);
     }
     
+    public void addListenerjButtonRelacionado(ActionListener listenPersona){
+        jButtonRelacionado.addActionListener(listenPersona);
+    }
+    
     public void nuevoAction (){
        revisaDatos();
     }
