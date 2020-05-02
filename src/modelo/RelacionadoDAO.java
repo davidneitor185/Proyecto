@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
  *
  * @author Deiby Rodriguez
  */
-public class RelacionadoDAO {
+public class RelacionadoDAO extends PersonaDAO{
 
     public RelacionadoDAO() {
     }
@@ -141,9 +141,9 @@ public class RelacionadoDAO {
             con = Fachada.getConnection();
             String sql="";
             if(id_relacionado.equalsIgnoreCase("0")){
-                sql = "SELECT * FROM relacionado ORDER BY id_relacionado";            
+                sql = "SELECT * FROM relacionado JOIN persona on infectado.id_persona=persona.id ORDER BY id_relacionado";            
             }else{
-                sql = "SELECT * FROM relacionado WHERE id_relacionado = ? "
+                sql = "SELECT * FROM relacionado WHERE id_relacionado = ? JOIN persona on infectado.id_persona=persona.id"
                     + "ORDER BY id_relacionado";      
             }                        
             pstm = con.prepareStatement(sql);
