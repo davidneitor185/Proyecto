@@ -7,6 +7,7 @@ package Controlador;
 
 
 import Vista.InfectadoIG;
+import Vista.PersonaIG;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -62,7 +63,7 @@ public class InfectadoControlador {
          RelacionadoIG vista = new RelacionadoIG();
          vista.setVisible(true);
          RelacionadoDAO modelo = new RelacionadoDAO();
-         //here
+         RelacionadoControlador controler = new RelacionadoControlador(modelo,vista);
          }    
       
       
