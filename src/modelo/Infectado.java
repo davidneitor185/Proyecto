@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package modelo;
+import java.sql.Date;
 
 /**
  *
@@ -11,7 +12,7 @@ package modelo;
  */
 public class Infectado extends Persona {
     private String estado;
-    private String fecha_D;
+    private Date fecha_D;
     private String id_infectado;
     private String pais_Pro;
     private String tipo_cont;
@@ -21,7 +22,7 @@ public class Infectado extends Persona {
     
     
 
-    public Infectado(String estado, String fecha_D, String id_infectado, String pais_Pro, String tipo_cont) {
+    public Infectado(String estado, Date fecha_D, String id_infectado, String pais_Pro, String tipo_cont) {
         this.estado = estado;
         this.fecha_D = fecha_D;
         this.id_infectado = id_infectado;
@@ -37,11 +38,11 @@ public class Infectado extends Persona {
         this.estado = estado;
     }
 
-    public String getFecha_D() {
+    public Date getFecha_D() {
         return fecha_D;
     }
 
-    public void setFecha_D(String fecha_D) {
+    public void setFecha_D(Date fecha_D) {
         this.fecha_D = fecha_D;
     }
 

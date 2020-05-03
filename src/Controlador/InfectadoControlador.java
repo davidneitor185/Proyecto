@@ -13,7 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import modelo.*;
-import vista.RelacionadoIG;
+//import vista.RelacionadoIG;
 /**
  *
  * @author Santiago y Victor
@@ -54,17 +54,17 @@ public class InfectadoControlador {
                 vista.cancelarAction();
             }else if(e.getActionCommand().equalsIgnoreCase("depar")){
                 municipios();
-            }else if(e.getActionCommand().equalsIgnoreCase("Relacionado")){
-                relacionado();
-            }   
+            }//else if(e.getActionCommand().equalsIgnoreCase("Relacionado")){
+               // relacionado();
+            //}   
         }
         
-        public void relacionado(){
+        /*public void relacionado(){
          RelacionadoIG vista = new RelacionadoIG();
          vista.setVisible(true);
          RelacionadoDAO modelo = new RelacionadoDAO();
          RelacionadoControlador controler = new RelacionadoControlador(modelo,vista);
-         }    
+         } */   
       
       
         public void cargar(){
