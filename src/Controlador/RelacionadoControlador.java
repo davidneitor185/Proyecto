@@ -6,13 +6,14 @@
  */
 package Controlador;
 
+import Vista.RelacionadoIG;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modelo.Relacionado;
 import modelo.RelacionadoDAO;
-import vista.RelacionadoIG;
+
 
 /**
  *
@@ -33,6 +34,7 @@ public class RelacionadoControlador {
         ArrayList <Relacionado> listaRelacionado;
         listaRelacionado = this.modelo.listadoRelacionados("0");
         this.vista.cargarRelacionados(listaRelacionado);
+        //this.vista.setVisible(true);
     }
      
     class PersonaListener implements ActionListener {

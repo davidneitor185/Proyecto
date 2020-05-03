@@ -24,6 +24,11 @@ public class InfectadoIG extends javax.swing.JInternalFrame {
         mCiudad = (DefaultComboBoxModel)cmbCiudad.getModel();
         dpkFechaDiag.setFormats("dd/MM/yyyy");
         cmbDepar.setActionCommand("depar");
+        jButtonRelacionado.setActionCommand("Relacionado");
+    }
+    
+    public void agregar(RelacionadoIG vista){
+        this.add(vista);    
     }
     
     public String getId(){
