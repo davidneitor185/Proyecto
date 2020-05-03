@@ -1,6 +1,7 @@
 package Vista;
 
 import java.awt.event.ActionListener;
+import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -59,8 +60,8 @@ public class InfectadoIG extends javax.swing.JInternalFrame {
         return jTextCaso.getText().trim();
     }
     
-    public String getFechaDiag(){
-        return dpkFechaDiag.getDate().toString();
+    public Date getFechaDiag(){
+        return new java.sql.Date(dpkFechaDiag.getDate().getTime());
     }
     
     public String getPaisProc(){

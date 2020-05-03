@@ -31,7 +31,7 @@ public class InfectadoDAO extends PersonaDAO {
                     + " VALUES(?,?,?,?,?,?)";
             pstm = con.prepareStatement(sql);
             pstm.setString(1, inf.getEstado());
-            pstm.setString(2, inf.getFecha_D());
+            pstm.setDate(2, inf.getFecha_D());
             pstm.setString(3,inf.getId_Infectado());
             pstm.setString(4,inf.getId());
             pstm.setString(5,inf.getPais_Pro());
@@ -73,7 +73,7 @@ public class InfectadoDAO extends PersonaDAO {
                     +    "WHERE id_infectado = ?";
             pstm = con.prepareStatement(sql);            
             pstm.setString(1, inf.getEstado());
-            pstm.setString(2, inf.getFecha_D());
+            pstm.setDate(2, inf.getFecha_D());
             pstm.setString(3, inf.getPais_Pro());
             pstm.setString(4, inf.getTipo_cont());
             pstm.setString(5, inf.getId_Infectado());
@@ -160,7 +160,7 @@ public class InfectadoDAO extends PersonaDAO {
             while(rs.next()){
                 inf = new Infectado();
                 inf.setEstado(rs.getString("estado"));
-                inf.setFecha_D(rs.getString("fecha_d"));
+                inf.setFecha_D(rs.getDate("fecha_d"));
                 inf.setId_Infectado(rs.getString("id_infectado"));
                 inf.setPais_Pro(rs.getString("pais_pro"));
                 inf.setTipo_cont(rs.getString("tipo_cont"));

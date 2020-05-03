@@ -55,9 +55,9 @@ public class InfectadoControlador {
                 vista.cancelarAction();
             }else if(e.getActionCommand().equalsIgnoreCase("depar")){
                 municipios();
-            }else if(e.getActionCommand().equalsIgnoreCase("Relacionado")){
-                relacionado();
-            }   
+            }//else if(e.getActionCommand().equalsIgnoreCase("Relacionado")){
+               // relacionado();
+            //}   
         }
         
         public void relacionado() {

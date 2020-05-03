@@ -71,7 +71,7 @@ public class RelacionadoControlador {
                 
                 if(existe == 0){
                     
-                    int resultado2 = modelo.guardarPersona(inf);
+                    int resultado2 = modelo.guardarPersona(inf);//Nuevo persona rela
                     int resultado = modelo.grabarRelacionado(inf);
                     if(resultado2 == 1 && resultado ==1){
                         vista.gestionMensajes("Registro Grabado con éxito", 
