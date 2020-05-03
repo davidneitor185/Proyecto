@@ -61,9 +61,10 @@ public class InfectadoControlador {
         }
         
         public void relacionado(){
-         RelacionadoIG vista = new RelacionadoIG();
+         RelacionadoIG vista2 = new RelacionadoIG();
          RelacionadoDAO modelo = new RelacionadoDAO();
-         RelacionadoControlador controler = new RelacionadoControlador(modelo,vista);
+         RelacionadoControlador controler = new RelacionadoControlador(modelo,vista2);
+         vista.agregar(vista2);
          }    
       
       
