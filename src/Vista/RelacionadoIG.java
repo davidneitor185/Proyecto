@@ -85,7 +85,7 @@ public class RelacionadoIG extends javax.swing.JInternalFrame {
     }
     
     public String getCasoInf(){
-        return jTextCaso.getText();
+        return jTextCaso.getText().trim();
     }
     
     public void limpiarTabla (){

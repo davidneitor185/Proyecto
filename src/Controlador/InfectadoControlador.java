@@ -65,10 +65,9 @@ public class InfectadoControlador {
         public void relacionado() {
             RelacionadoIG vista2 = new RelacionadoIG();
             RelacionadoDAO modelo = new RelacionadoDAO();
-            RelacionadoControlador controler = new RelacionadoControlador(modelo, vista2);
+            RelacionadoControlador controler = new RelacionadoControlador(modelo, vista2,vista.getIdInfec() );
             int x = (jDesktopPane1.getWidth() / 2) - vista2.getWidth() / 2;
             int y = (jDesktopPane1.getHeight() / 2) - vista2.getHeight() / 2;
-            vista2.setCasoInf(vista.getIdInfec());
             vista2.setNombreInf(vista.getNombre());
             vista2.setDocumentoInf(vista.getId());
 

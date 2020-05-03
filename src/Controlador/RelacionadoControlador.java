@@ -23,16 +23,16 @@ public class RelacionadoControlador {
     private RelacionadoDAO modelo;
     private RelacionadoIG vista;
 
-    public RelacionadoControlador(RelacionadoDAO modelo, RelacionadoIG vista) {
+    public RelacionadoControlador(RelacionadoDAO modelo, RelacionadoIG vista,String id) {
         this.modelo = modelo;
         this.vista = vista;
-
+        this.vista.setCasoInf(id);
         this.vista.addListenerBtnNuevo(new PersonaListener());
         this.vista.addListenerBtnModificar(new PersonaListener());
         this.vista.addListenerBtnBorrar(new PersonaListener());
-
+        
         ArrayList<Relacionado> listaRelacionado;
-        listaRelacionado = this.modelo.listadoRelacionados("0");
+        listaRelacionado = this.modelo.listadoRelacionados(id);
         this.vista.cargarRelacionados(listaRelacionado);
         //this.vista.setVisible(true);
     }
