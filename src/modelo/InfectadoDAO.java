@@ -31,7 +31,7 @@ public class InfectadoDAO extends PersonaDAO {
                     + " VALUES(?,?,?,?,?,?)";
             pstm = con.prepareStatement(sql);
             pstm.setString(1, inf.getEstado());
-            pstm.setDate(2, inf.getFecha_D());
+            pstm.setDate(2, new java.sql.Date(inf.getFecha_D().getTime()));
             pstm.setString(3,inf.getId_Infectado());
             pstm.setString(4,inf.getId());
             pstm.setString(5,inf.getPais_Pro());
