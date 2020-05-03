@@ -7,13 +7,14 @@ package Controlador;
 
 
 import Vista.InfectadoIG;
-import Vista.PersonaIG;
+import Vista.RelacionadoIG;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import modelo.*;
-import vista.RelacionadoIG;
+
+
 /**
  *
  * @author Santiago y Victor
@@ -61,7 +62,6 @@ public class InfectadoControlador {
         
         public void relacionado(){
          RelacionadoIG vista = new RelacionadoIG();
-         vista.setVisible(true);
          RelacionadoDAO modelo = new RelacionadoDAO();
          RelacionadoControlador controler = new RelacionadoControlador(modelo,vista);
          }    

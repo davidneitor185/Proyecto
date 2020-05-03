@@ -3,105 +3,34 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package vista;
+
+package Vista;
 
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelo.Infectado;
+import modelo.Persona;
 import modelo.Relacionado;
 
 /**
  *
  * @author David
  */
-public class RelacionadoIG extends javax.swing.JFrame {
+public class RelacionadoIG extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates new form Infectado
-     */
+    /** Creates new form RelacionadoIG2 */
+    
     private DefaultTableModel mTabla;
     
     public RelacionadoIG() {
         initComponents();
-         mTabla =(DefaultTableModel) tblPersonas.getModel();
+        mTabla =(DefaultTableModel) tblPersonas.getModel();
+        cmbDepar.setActionCommand("depar");
     }
     
-     public void cargarRelacionados(ArrayList<Relacionado> listRelacionados){
-        limpiarTabla();
-        for(int i= 0; i < listRelacionados.size(); i++){
-            mTabla.addRow(new Object[]{
-            listRelacionados.get(i).getId_relacionado(),
-            listRelacionados.get(i).getId(),
-            listRelacionados.get(i).getNombre(),
-            listRelacionados.get(i).getEdad(),
-            listRelacionados.get(i).getSexo(),
-            listRelacionados.get(i).getDepartamento(),
-            listRelacionados.get(i).getCiudad_O(),
-            listRelacionados.get(i).getFecha(),
-            listRelacionados.get(i).getLugar()
-            });
-        }
-    }
-     
-     public void addListenerBtnNuevo(ActionListener listenPersona){
-        btnNuevo.addActionListener(listenPersona);
-    }
-    
-    public void addListenerBtnModificar(ActionListener listenPersona){
-        btnModificar.addActionListener(listenPersona);
-    }
-    
-    public void addListenerBtnBorrar(ActionListener listenPersona){
-        btnBorrar.addActionListener(listenPersona);
-    }
-    
-    public void nuevoAction (){
-       revisaDatos();
-    }
-    
-    public boolean revisaDatos(){
-        if (txtNombre.getText().replaceAll(" ", "").isEmpty()||txtId.getText().replaceAll(" ", "").isEmpty()||
-                txtEdad.getText().replaceAll(" ", "").isEmpty()|| cmbDepar.getSelectedIndex() == 0){
-            JOptionPane.showMessageDialog(this,"Datos incompletos, por favor llene todos lo campos");
-            return false;
-        }
-        return true;
-    }
-    
-    public void gestionMensajes(String mensaje, String titulo, int icono){
-         JOptionPane.showMessageDialog(this,mensaje, titulo, icono);
-    }
-    
-    public void limpiarTabla (){
-        //mTabla.setRowCount(0);
-        for(int i=mTabla.getRowCount()-1; i>=0 ; i--){
-            mTabla.removeRow(i);
-        }
-    }
-    
-    public void cancelarAction (){
-        btnBorrar.setEnabled(false);
-        btnModificar.setEnabled(false);
-        btnNuevo.setText("Nuevo");
-        btnNuevo.setActionCommand("nuevo");
-        txtId.setEnabled(true);
-        tblPersonas.clearSelection();
-        limpiarDatos();
-    }
-    
-    public void limpiarDatos(){
-        txtId.setText("");
-        txtNombre.setText("");
-        txtEdad.setText("");
-        cmbSexo.setSelectedIndex(0);
-        cmbDepar.setSelectedIndex(0);
-        cmbCiudad.setSelectedIndex(0);
-        txtNombre.requestFocus();
-    }
-    
-    public String getId(){
+      public String getId(){
         return txtId.getText().trim();
     }
     
@@ -121,37 +50,111 @@ public class RelacionadoIG extends javax.swing.JFrame {
         return cmbDepar.getSelectedItem().toString();
     }
     
+     public String getIdRelacionado(){
+        return jTextIdRelacion.getText().trim();
+    }
+     
+     public String getFecha(){
+        return jTextFecha.getText().trim();
+    }
+     
+    public String getLugar(){
+        return jTextLugar.getText().trim();
+    }
+    
     public String getCiudad(){
         return cmbCiudad.getSelectedItem().toString();
     }
     
-    public String getIdRelacionado(){
-        return jTextIdRelacion.getText();
+    public void limpiarTabla (){
+        //mTabla.setRowCount(0);
+        for(int i=mTabla.getRowCount()-1; i>=0 ; i--){
+            mTabla.removeRow(i);
+        }
     }
     
-    public String getFecha(){
-        return jTextFecha.getText();
+    public void gestionMensajes(String mensaje, String titulo, int icono){
+         JOptionPane.showMessageDialog(this,mensaje, titulo, icono);
     }
     
-    public String getLugar(){
-        return jTextLugar.getText();
+    public void limpiarDatos(){
+        txtId.setText("");
+        txtNombre.setText("");
+        txtEdad.setText("");
+        cmbSexo.setSelectedIndex(0);
+        cmbDepar.setSelectedIndex(0);
+        cmbCiudad.setSelectedIndex(0);
+        txtNombre.requestFocus();
     }
     
-    public void setInfectado(Infectado infectado){
-    jTextNombreInf.setText(infectado.getNombre());
-    jTextDocumentoInf.setText(infectado.getId());
-    jTextCaso.setText(infectado.getId_Infectado());
+     public void addListenerBtnNuevo(ActionListener listenPersona){
+        btnNuevo.addActionListener(listenPersona);
+    }
+    
+    public void addListenerBtnModificar(ActionListener listenPersona){
+        btnModificar.addActionListener(listenPersona);
+    }
+    
+    public void addListenerBtnBorrar(ActionListener listenPersona){
+        btnBorrar.addActionListener(listenPersona);
+    }
+    
+    public void cargarRelacionados(ArrayList<Relacionado> listRelacionados){
+        limpiarTabla();
+        for(int i= 0; i < listRelacionados.size(); i++){
+            mTabla.addRow(new Object[]{
+            listRelacionados.get(i).getId_relacionado(),
+            listRelacionados.get(i).getId(),
+            listRelacionados.get(i).getNombre(),
+            listRelacionados.get(i).getEdad(),
+            listRelacionados.get(i).getSexo(),
+            listRelacionados.get(i).getDepartamento(),
+            listRelacionados.get(i).getCiudad_O(),
+            listRelacionados.get(i).getFecha(),
+            listRelacionados.get(i).getLugar()
+            });
+        }
+    }
+    
+     public void nuevoAction (){
+       revisaDatos();
+    }
+     
+     public boolean revisaDatos(){
+        if (txtNombre.getText().replaceAll(" ", "").isEmpty()||txtId.getText().replaceAll(" ", "").isEmpty()||
+                txtEdad.getText().replaceAll(" ", "").isEmpty()|| cmbDepar.getSelectedIndex() == 0){
+            JOptionPane.showMessageDialog(this,"Datos incompletos, por favor llene todos lo campos");
+            return false;
+        }
+        return true;
+    }
+    
+    public void cancelarAction (){
+        btnBorrar.setEnabled(false);
+        btnModificar.setEnabled(false);
+        btnNuevo.setText("Nuevo");
+        btnNuevo.setActionCommand("nuevo");
+        txtId.setEnabled(true);
+        tblPersonas.clearSelection();
+        limpiarDatos();
     }
 
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
+    /** This method is called from within the constructor to
+     * initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is
+     * always regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jTextNombreInf = new javax.swing.JTextField();
+        jTextDocumentoInf = new javax.swing.JTextField();
+        jTextCaso = new javax.swing.JTextField();
         panDatos = new javax.swing.JPanel();
         lblNombre = new javax.swing.JLabel();
         lblId = new javax.swing.JLabel();
@@ -171,21 +174,60 @@ public class RelacionadoIG extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jTextLugar = new javax.swing.JTextField();
         jTextFecha = new javax.swing.JTextField();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jTextNombreInf = new javax.swing.JTextField();
-        jTextDocumentoInf = new javax.swing.JTextField();
-        jTextCaso = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblPersonas = new javax.swing.JTable();
         btnNuevo = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnBorrar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblPersonas = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Crear Relacionado");
+        setClosable(true);
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos del infectado con quien se relacionó"));
+
+        jLabel2.setText("Nombre");
+
+        jLabel3.setText("Identificacion");
+
+        jLabel4.setText("Caso de infectado #");
+
+        jTextNombreInf.setEditable(false);
+
+        jTextDocumentoInf.setEditable(false);
+
+        jTextCaso.setEditable(false);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTextNombreInf, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTextDocumentoInf, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(48, 48, 48)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTextCaso, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(60, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4)
+                    .addComponent(jTextNombreInf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextDocumentoInf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextCaso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(12, Short.MAX_VALUE))
+        );
 
         panDatos.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos del Relacionado"));
 
@@ -329,52 +371,13 @@ public class RelacionadoIG extends javax.swing.JFrame {
                         .addGap(24, 24, 24))))
         );
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos del infectado con quien se relacionó"));
+        btnNuevo.setText("Nuevo");
 
-        jLabel2.setText("Nombre");
+        btnModificar.setText("Modificar");
+        btnModificar.setEnabled(false);
 
-        jLabel3.setText("Identificacion");
-
-        jLabel4.setText("Caso de infectado #");
-
-        jTextNombreInf.setEditable(false);
-
-        jTextDocumentoInf.setEditable(false);
-
-        jTextCaso.setEditable(false);
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextNombreInf, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextDocumentoInf, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextCaso, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(60, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addComponent(jTextNombreInf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextDocumentoInf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextCaso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(12, Short.MAX_VALUE))
-        );
+        btnBorrar.setText("Eliminar");
+        btnBorrar.setEnabled(false);
 
         tblPersonas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -400,14 +403,6 @@ public class RelacionadoIG extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblPersonas);
 
-        btnNuevo.setText("Nuevo");
-
-        btnModificar.setText("Modificar");
-        btnModificar.setEnabled(false);
-
-        btnBorrar.setText("Eliminar");
-        btnBorrar.setEnabled(false);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -415,19 +410,17 @@ public class RelacionadoIG extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(panDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnBorrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(panDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnBorrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 742, Short.MAX_VALUE))
                 .addContainerGap())
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 739, Short.MAX_VALUE)
-                    .addContainerGap()))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -436,21 +429,18 @@ public class RelacionadoIG extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(panDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(53, 53, 53)
+                        .addGap(47, 47, 47)
                         .addComponent(btnNuevo)
                         .addGap(18, 18, 18)
                         .addComponent(btnModificar)
                         .addGap(18, 18, 18)
                         .addComponent(btnBorrar)))
-                .addContainerGap(231, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(236, 236, 236)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
-                    .addContainerGap()))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -485,41 +475,6 @@ public class RelacionadoIG extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tblPersonasMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(RelacionadoIG.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(RelacionadoIG.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(RelacionadoIG.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(RelacionadoIG.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new RelacionadoIG().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBorrar;
@@ -554,4 +509,5 @@ public class RelacionadoIG extends javax.swing.JFrame {
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
+
 }
