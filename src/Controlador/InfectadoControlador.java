@@ -60,12 +60,13 @@ public class InfectadoControlador {
             }   
         }
         
-        public void relacionado(){
-         RelacionadoIG vista2 = new RelacionadoIG();
-         RelacionadoDAO modelo = new RelacionadoDAO();
-         RelacionadoControlador controler = new RelacionadoControlador(modelo,vista2);
-         vista.agregar(vista2);
-         }    
+        public void relacionado() {
+            RelacionadoIG vista2 = new RelacionadoIG();
+            RelacionadoDAO modelo = new RelacionadoDAO();
+            RelacionadoControlador controler = new RelacionadoControlador(modelo, vista2);
+            vista2.setVisible(true);
+            vista.agregar(vista2);
+        } 
       
       
         public void cargar(){

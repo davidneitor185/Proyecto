@@ -22,6 +22,10 @@ public class Principal extends javax.swing.JFrame {
         initComponents();
         this.setExtendedState(MAXIMIZED_BOTH);
     }
+    
+    public void agregar(RelacionadoIG vista){
+        this.add(vista);    
+    }
 
     /** This method is called from within the constructor to
      * initialize the form.
