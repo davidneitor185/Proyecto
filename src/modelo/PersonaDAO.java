@@ -57,7 +57,41 @@ public class PersonaDAO {
         return rtdo;
     }
     
-    public int guardarPersona2(Infectado p){      
+    public int guardarPersona(Infectado p){      
+        Connection con = null;
+        PreparedStatement pstm = null;
+        int rtdo = 0;
+        try{
+            con = Fachada.getConnection();
+            String sql = "INSERT INTO persona (nombre, edad, sexo, ciudad_o,"
+                    + " departamento, id) values (?,?,?,?,?,?)";
+            pstm = con.prepareStatement(sql);
+            pstm.setString(1, p.getNombre());
+            pstm.setInt(2, p.getEdad());
+            pstm.setString(3,String.valueOf(p.getSexo()));
+            pstm.setString(4,p.getCiudad_O());            
+            pstm.setString(5,p.getDepartamento());
+            pstm.setString(6, p.getId());
+            
+            rtdo = pstm.executeUpdate();  
+        }
+        catch(SQLException ex){
+            JOptionPane.showMessageDialog(null,"Código : " + 
+                        ex.getErrorCode() + "\nError :" + ex.getMessage());
+        }
+        finally{
+            try{
+                if(pstm!=null) pstm.close();                
+            }
+            catch(SQLException ex){
+                JOptionPane.showMessageDialog(null,"Código : " + 
+                        ex.getErrorCode() + "\nError :" + ex.getMessage());
+            }
+        }
+        return rtdo;
+    }
+    
+    public int guardarPersona(Relacionado p){      
         Connection con = null;
         PreparedStatement pstm = null;
         int rtdo = 0;
@@ -130,7 +164,7 @@ public class PersonaDAO {
         return rtdo;
     }
          
-     public int modificarPersona2(Infectado p){      
+     public int modificarPersona(Infectado p){      
         Connection con = null;
         PreparedStatement pstm = null;
         int rtdo = 0;
@@ -164,6 +198,40 @@ public class PersonaDAO {
         return rtdo;
     }
     
+     public int modificarPersona(Relacionado p){      
+        Connection con = null;
+        PreparedStatement pstm = null;
+        int rtdo = 0;
+        try{
+            con = Fachada.getConnection();
+            String sql = "UPDATE persona " +
+                         "SET nombre = ?, edad = ?, sexo = ?, ciudad_o = ?, departamento = ? "
+                    +    "WHERE id = ?";
+            pstm = con.prepareStatement(sql);            
+            pstm.setString(1, p.getNombre());
+            pstm.setInt(2, p.getEdad());
+            pstm.setString(3,String.valueOf(p.getSexo()));
+            pstm.setString(4,p.getCiudad_O());            
+            pstm.setString(5,p.getDepartamento());
+            pstm.setString(6, p.getId());
+            rtdo = pstm.executeUpdate();  
+        }
+        catch(SQLException ex){
+            JOptionPane.showMessageDialog(null,"Código : " + 
+                        ex.getErrorCode() + "\nError :" + ex.getMessage());
+        }
+        finally{
+            try{
+                if(pstm!=null) pstm.close();                
+            }
+            catch(SQLException ex){
+                JOptionPane.showMessageDialog(null,"Código : " + 
+                        ex.getErrorCode() + "\nError :" + ex.getMessage());
+            }
+        }
+        return rtdo;
+    }
+     
     /**
      * 
      * @param id string identificador de persona a modificar
