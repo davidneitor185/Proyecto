@@ -151,6 +151,7 @@ public class RelacionadoControlador {
             inf.setId_relacionado(vista.getIdRelacionado());
             inf.setFecha(vista.getFecha());
             inf.setLugar(vista.getLugar());
+            inf.setId_focoinfec(vista.getCasoInf());
 
             if (modelo.modificarPersona(inf) == 1 && modelo.modificarRelacionado(inf) == 1) {
                 vista.gestionMensajes("Actualización exitosa",
