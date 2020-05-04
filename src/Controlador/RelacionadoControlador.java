@@ -156,6 +156,7 @@ public class RelacionadoControlador {
             if (modelo.modificarPersona(inf) == 1 && modelo.modificarRelacionado(inf) == 1) {
                 vista.gestionMensajes("Actualización exitosa",
                         "Confirmación ", JOptionPane.INFORMATION_MESSAGE);
+                vista.cargarRelacionados(modelo.listadoRelacionados(vista.getCasoInf()));
                 vista.cancelarAction();
                 //vista.cargarPersonas(modelo.listadoPersonas("0"));           
             } else {
