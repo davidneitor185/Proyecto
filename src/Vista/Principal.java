@@ -6,10 +6,9 @@
 
 package Vista;
 
-import Controlador.InfectadoControlador;
-import Controlador.PersonaContolador;
-import modelo.InfectadoDAO;
-import modelo.PersonaDAO;
+import modelo.*;
+import Controlador.*;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -38,6 +37,9 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         menuAyuda = new javax.swing.JMenu();
+        menuChat = new javax.swing.JMenu();
+        menuCliente = new javax.swing.JMenuItem();
+        Server = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Covid-19 (TODOS MORIREMOS)");
@@ -60,7 +62,7 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        jMenuItem1.setText("persona");
+        jMenuItem1.setText("Persona");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
@@ -78,7 +80,28 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        menuAyuda.setText("Edit");
+        menuAyuda.setText("Ayuda");
+
+        menuChat.setText("Chat");
+
+        menuCliente.setText("Cliente");
+        menuCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuClienteActionPerformed(evt);
+            }
+        });
+        menuChat.add(menuCliente);
+
+        Server.setText("Operador");
+        Server.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ServerActionPerformed(evt);
+            }
+        });
+        menuChat.add(Server);
+
+        menuAyuda.add(menuChat);
+
         jMenuBar1.add(menuAyuda);
 
         setJMenuBar(jMenuBar1);
@@ -141,6 +164,26 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void menuClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuClienteActionPerformed
+        String nombre = JOptionPane.showInputDialog(null,"Por favor ingrese su nombre");
+        Cliente cliente = new Cliente (nombre);
+        int x = (jDesktopPane1.getWidth() / 2) - cliente.getWidth() /2;
+        int y = (jDesktopPane1.getHeight() / 2) - cliente.getHeight() /2;
+
+        if (cliente.isShowing()){
+            cliente.setLocation(x,y);
+        }
+        else{
+            jDesktopPane1.add(cliente);
+            cliente.setLocation(x,y);
+            cliente.setVisible(true);
+        }
+    }//GEN-LAST:event_menuClienteActionPerformed
+
+    private void ServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ServerActionPerformed
+        ChatServer server = new ChatServer(9999);
+    }//GEN-LAST:event_ServerActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -177,12 +220,15 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem Server;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenu menuAyuda;
+    private javax.swing.JMenu menuChat;
+    private javax.swing.JMenuItem menuCliente;
     // End of variables declaration//GEN-END:variables
 
 }

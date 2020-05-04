@@ -414,18 +414,19 @@
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="cmbEstado" pref="0" max="32767" attributes="0"/>
+                              <Component id="jTextCaso" pref="85" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
-                                  <Component id="jTextCaso" min="-2" pref="85" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="cmbTipo" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
-                                  <Component id="cmbEstado" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
                                   <Component id="jTextPaisProc" min="-2" pref="109" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -503,12 +504,13 @@
         <Component class="javax.swing.JComboBox" name="cmbEstado">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="5">
-                <StringItem index="0" value=" "/>
+              <StringArray count="6">
+                <StringItem index="0" value=""/>
                 <StringItem index="1" value="Fallecido"/>
                 <StringItem index="2" value="Grave"/>
                 <StringItem index="3" value="Leve"/>
                 <StringItem index="4" value="Moderado"/>
+                <StringItem index="5" value="Recuperado"/>
               </StringArray>
             </Property>
           </Properties>
