@@ -101,7 +101,7 @@ public class InfectadoControlador {
 
                 if (existeInf == 0 && existePer == 0) {
 
-                    int resultado2 = modelo.guardarPersona2(inf);
+                    int resultado2 = modelo.guardarPersona(inf);
                     int resultado = modelo.grabarInf(inf);
                     if (resultado2 == 1 && resultado == 1) {
                         vista.gestionMensajes("Registro Grabado con éxito",
@@ -160,7 +160,7 @@ public class InfectadoControlador {
                 inf.setPais_Pro(vista.getPaisProc());
                 inf.setTipo_cont(vista.getTipoCont());
 
-                if (modelo.modificarPersona2(inf) == 1 && modelo.modificarInf(inf) == 1) {
+                if (modelo.modificarPersona(inf) == 1 && modelo.modificarInf(inf) == 1) {
                     vista.gestionMensajes("Actualización exitosa",
                             "Confirmación ", JOptionPane.INFORMATION_MESSAGE);
                     vista.cancelarAction();
