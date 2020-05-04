@@ -493,6 +493,8 @@ public class RelacionadoIG extends javax.swing.JInternalFrame {
             btnBorrar.setEnabled(true);
             btnNuevo.setText("Cancelar");
             btnNuevo.setActionCommand("cancelar");
+            txtId.setEnabled(false);
+            jTextIdRelacion.setEnabled(false);
         }
     }//GEN-LAST:event_tblPersonasMouseClicked
 

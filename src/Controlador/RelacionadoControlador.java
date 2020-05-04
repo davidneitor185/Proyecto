@@ -157,7 +157,7 @@ public class RelacionadoControlador {
                 vista.gestionMensajes("Actualización exitosa",
                         "Confirmación ", JOptionPane.INFORMATION_MESSAGE);
                 vista.cancelarAction();
-                //vista.cargarPersonas(modelo.listadoPersonas("0"));           
+                vista.cargarRelacionados(modelo.listadoRelacionados(vista.getCasoInf()));           
             } else {
                 vista.gestionMensajes("Actualización Falida",
                         "Confirmación ", JOptionPane.ERROR_MESSAGE);
