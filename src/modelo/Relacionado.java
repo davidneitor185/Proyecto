@@ -6,6 +6,8 @@
  */
 package modelo;
 
+import java.sql.Date;
+
 /**
  *
  * @author Deiby Rodriguez
@@ -14,13 +16,13 @@ public class Relacionado extends Persona{
     
     private String id_focoinfec;
     private String id_relacionado;
-    private String fecha;
+    private Date fecha;
     private String lugar;
 
     public Relacionado() {
     }
 
-    public Relacionado(String id_focoinfec, String id_relacionado, String fecha, String lugar) {
+    public Relacionado(String id_focoinfec, String id_relacionado, Date fecha, String lugar) {
         
         this.id_focoinfec = id_focoinfec;
         this.id_relacionado = id_relacionado;
@@ -44,11 +46,11 @@ public class Relacionado extends Persona{
         this.id_relacionado = id_persona;
     }
     
-    public String getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 

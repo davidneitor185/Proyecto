@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import modelo.MunicipioDAO;
 import modelo.Relacionado;
 import modelo.RelacionadoDAO;
 
@@ -22,14 +23,17 @@ public class RelacionadoControlador {
 
     private RelacionadoDAO modelo;
     private RelacionadoIG vista;
+    private MunicipioDAO muni;
 
     public RelacionadoControlador(RelacionadoDAO modelo, RelacionadoIG vista,String id) {
         this.modelo = modelo;
         this.vista = vista;
+        this.muni = new MunicipioDAO();
         this.vista.setCasoInf(id);
         this.vista.addListenerBtnNuevo(new PersonaListener());
         this.vista.addListenerBtnModificar(new PersonaListener());
         this.vista.addListenerBtnBorrar(new PersonaListener());
+        this.vista.addListenerCmbDepar(new PersonaListener());
         
         ArrayList<Relacionado> listaRelacionado;
         listaRelacionado = this.modelo.listadoRelacionados(id);
@@ -50,9 +54,16 @@ public class RelacionadoControlador {
                 eliminar();
             } else if (e.getActionCommand().equalsIgnoreCase("cancelar")) {
                 vista.cancelarAction();
+            }else if (e.getActionCommand().equalsIgnoreCase("depar")) {
+                municipios();
             }
         }
     }
+    public void municipios() {
+            ArrayList<String> listMuni;
+            listMuni = muni.listadoMuni(vista.getDeparSelected());
+            vista.cargarMunicipio(listMuni);
+        }
 
     public void cargar() {
         if (vista.revisaDatos()) {
@@ -78,7 +89,7 @@ public class RelacionadoControlador {
                 if (resultado2 == 1 && resultado == 1) {
                     vista.gestionMensajes("Registro Grabado con éxito",
                             "Confirmación", JOptionPane.INFORMATION_MESSAGE);
-                    vista.cargarRelacionados(modelo.listadoRelacionados("0"));
+                    vista.cargarRelacionados(modelo.listadoRelacionados(vista.getCasoInf()));
                     vista.cancelarAction();
                 } else {
                     vista.gestionMensajes("Error al grabar",
@@ -94,7 +105,7 @@ public class RelacionadoControlador {
                     
                     vista.gestionMensajes("Registro Grabado con éxito",
                             "Confirmación", JOptionPane.INFORMATION_MESSAGE);
-                    vista.cargarRelacionados(modelo.listadoRelacionados("0"));
+                    vista.cargarRelacionados(modelo.listadoRelacionados(vista.getCasoInf()));
                     vista.cancelarAction();
                 } else {
                     vista.gestionMensajes("Error al grabar",
@@ -118,7 +129,7 @@ public class RelacionadoControlador {
                 JOptionPane.showMessageDialog(null,
                         "Registro Borrado con éxtio",
                         "Confirmación de acción", JOptionPane.INFORMATION_MESSAGE);
-                vista.cargarRelacionados(modelo.listadoRelacionados("0"));
+                vista.cargarRelacionados(modelo.listadoRelacionados(vista.getCasoInf()));
                 vista.cancelarAction();
             } else {
                 JOptionPane.showMessageDialog(null,

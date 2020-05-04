@@ -35,7 +35,7 @@ public class RelacionadoDAO extends PersonaDAO{
             pstm = con.prepareStatement(sql);
             pstm.setString(1, p.getId_focoinfec());
             pstm.setString(2, p.getId_relacionado());
-            pstm.setString(3, p.getFecha());
+            pstm.setDate(3, p.getFecha());
             pstm.setString(4, p.getLugar());
             pstm.setString(5, p.getId());
             rtdo = pstm.executeUpdate();  
@@ -74,7 +74,7 @@ public class RelacionadoDAO extends PersonaDAO{
                     +    "WHERE id_relacionado=?";
             pstm = con.prepareStatement(sql);
             pstm.setString(1, p.getId_focoinfec());
-            pstm.setString(2, p.getFecha());
+            pstm.setDate(2, p.getFecha());
             pstm.setString(3, p.getLugar());
             pstm.setString(4, p.getId_relacionado());
             rtdo = pstm.executeUpdate();  
@@ -167,7 +167,7 @@ public class RelacionadoDAO extends PersonaDAO{
                 relacionado.setNombre(rs.getString("nombre"));
                 relacionado.setId_relacionado(rs.getString("id_relacionado"));
                 relacionado.setId_focoinfec(rs.getString("id_focoinfec"));
-                relacionado.setFecha(rs.getString("fecha"));
+                relacionado.setFecha(rs.getDate("fecha"));
                 relacionado.setLugar(rs.getString("lugar"));
                 listado.add(relacionado);
             }
