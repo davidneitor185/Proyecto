@@ -31,12 +31,13 @@ public class RelacionadoDAO extends PersonaDAO{
         rtdo = 0;
         try{
             con = Fachada.getConnection();
-            String sql = "INSERT INTO relacionado (id_focoinfec, id_relacionado,fecha,lugar) VALUES(?,?,?,?)";
+            String sql = "INSERT INTO relacionado (id_focoinfec, id_relacionado,fecha,lugar,id_persona) VALUES(?,?,?,?,?)";
             pstm = con.prepareStatement(sql);
             pstm.setString(1, p.getId_focoinfec());
             pstm.setString(2, p.getId_relacionado());
             pstm.setString(3, p.getFecha());
             pstm.setString(4, p.getLugar());
+            pstm.setString(5, p.getId());
             rtdo = pstm.executeUpdate();  
         }
         catch(SQLException ex){
@@ -141,12 +142,13 @@ public class RelacionadoDAO extends PersonaDAO{
             con = Fachada.getConnection();
             String sql="";
             if(id_relacionado.equalsIgnoreCase("0")){
-                sql = "SELECT * FROM relacionado JOIN persona on infectado.id_persona=persona.id ORDER BY id_relacionado";            
+                sql = "SELECT * FROM relacionado JOIN persona on relacionado.id_persona=persona.id ORDER BY id_relacionado";            
             }else{
-                sql = "SELECT * FROM relacionado WHERE id_relacionado = ? JOIN persona on infectado.id_persona=persona.id"
+                sql = "SELECT * FROM relacionado JOIN persona on relacionado.id_persona=persona.id WHERE id_focoinfec = ?"
                     + "ORDER BY id_relacionado";      
             }                        
             pstm = con.prepareStatement(sql);
+            
             
             if(id_relacionado != "0"){
                 pstm.setString(1, id_relacionado);
@@ -157,6 +159,12 @@ public class RelacionadoDAO extends PersonaDAO{
             Relacionado relacionado = null;
             while(rs.next()){
                 relacionado = new Relacionado();
+                relacionado.setId(rs.getString("id"));
+                relacionado.setCiudad_O(rs.getString("ciudad_o"));
+                relacionado.setDepartamento(rs.getString("departamento"));
+                relacionado.setSexo(rs.getString("sexo").charAt(0));
+                relacionado.setEdad(rs.getInt("edad"));
+                relacionado.setNombre(rs.getString("nombre"));
                 relacionado.setId_relacionado(rs.getString("id_relacionado"));
                 relacionado.setId_focoinfec(rs.getString("id_focoinfec"));
                 relacionado.setFecha(rs.getString("fecha"));

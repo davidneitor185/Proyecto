@@ -8,8 +8,10 @@ package Vista;
 
 import Controlador.InfectadoControlador;
 import Controlador.PersonaContolador;
+import Controlador.RelacionadoControlador;
 import modelo.InfectadoDAO;
 import modelo.PersonaDAO;
+import modelo.RelacionadoDAO;
 
 /**
  *
@@ -102,36 +104,16 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
-     
-    
+
     }//GEN-LAST:event_jMenu1ActionPerformed
-
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        PersonaIG vista = new PersonaIG();
-        PersonaDAO modelo = new PersonaDAO();
-        
-        PersonaContolador controlador = new PersonaContolador(modelo, vista);
-        
-        int x = (jDesktopPane1.getWidth() / 2) - vista.getWidth() /2;
-        int y = (jDesktopPane1.getHeight() / 2) - vista.getHeight() /2;
-
-        if (vista.isShowing()){
-            vista.setLocation(x,y);
-        }
-        else{
-            jDesktopPane1.add(vista);
-            vista.setLocation(x,y);
-            vista.setVisible(true);
-        }
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
         InfectadoIG vista = new InfectadoIG();
         InfectadoDAO modelo = new InfectadoDAO();
-        
+
         InfectadoControlador controlador = new InfectadoControlador(modelo, vista);
-        
+
         int x = (jDesktopPane1.getWidth() / 2) - vista.getWidth() /2;
         int y = (jDesktopPane1.getHeight() / 2) - vista.getHeight() /2;
 
@@ -144,6 +126,25 @@ public class Principal extends javax.swing.JFrame {
             vista.setVisible(true);
         }
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        PersonaIG vista = new PersonaIG();
+        PersonaDAO modelo = new PersonaDAO();
+
+        PersonaContolador controlador = new PersonaContolador(modelo, vista);
+
+        int x = (jDesktopPane1.getWidth() / 2) - vista.getWidth() /2;
+        int y = (jDesktopPane1.getHeight() / 2) - vista.getHeight() /2;
+
+        if (vista.isShowing()){
+            vista.setLocation(x,y);
+        }
+        else{
+            jDesktopPane1.add(vista);
+            vista.setLocation(x,y);
+            vista.setVisible(true);
+        }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -181,7 +182,7 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JDesktopPane jDesktopPane1;
+    public static javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
