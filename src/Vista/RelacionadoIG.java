@@ -111,11 +111,14 @@ public class RelacionadoIG extends javax.swing.JInternalFrame {
         txtId.setText("");
         txtNombre.setText("");
         txtEdad.setText("");
+        jTextIdRelacion.setText("");
+        jTextLugar.setText("");
         cmbSexo.setSelectedIndex(0);
         cmbDepar.setSelectedIndex(0);
         cmbCiudad.setSelectedIndex(0);
         txtNombre.requestFocus();
-    }
+        dpkFechaDiag.setDate(null);        
+        }
     
     public void addListenerCmbDepar(ActionListener listenPersona){
         cmbDepar.addActionListener(listenPersona);
@@ -477,13 +480,15 @@ public class RelacionadoIG extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(this,"No hay registros");
             }
         }else {
-            txtId.setText(tblPersonas.getValueAt(sel, 0).toString());
-            txtId.setEnabled(false);
-            txtNombre.setText(tblPersonas.getValueAt(sel, 1).toString());
-            txtEdad.setText(tblPersonas.getValueAt(sel, 2).toString());
-            cmbSexo.setSelectedItem(tblPersonas.getValueAt(sel, 3).toString());
-            cmbDepar.setSelectedItem(tblPersonas.getValueAt(sel, 4).toString());
-            cmbCiudad.setSelectedItem(tblPersonas.getValueAt(sel, 5).toString());
+            jTextIdRelacion.setText(tblPersonas.getValueAt(sel, 0).toString());            
+            txtId.setText(tblPersonas.getValueAt(sel, 1).toString());
+            txtNombre.setText(tblPersonas.getValueAt(sel, 2).toString());
+            txtEdad.setText(tblPersonas.getValueAt(sel, 3).toString());
+            cmbSexo.setSelectedItem(tblPersonas.getValueAt(sel, 4).toString());
+            cmbDepar.setSelectedItem(tblPersonas.getValueAt(sel, 5).toString());
+            cmbCiudad.setSelectedItem(tblPersonas.getValueAt(sel, 6).toString());
+            dpkFechaDiag.setDate((Date)tblPersonas.getValueAt(sel, 7));
+            jTextLugar.setText(tblPersonas.getValueAt(sel, 8).toString());
             btnModificar.setEnabled(true);
             btnBorrar.setEnabled(true);
             btnNuevo.setText("Cancelar");
