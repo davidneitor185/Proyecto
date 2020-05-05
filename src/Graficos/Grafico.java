@@ -42,7 +42,7 @@ public class Grafico {
     }
         DefaultPieDataset data= new DefaultPieDataset();
         data.setValue("Relacionado : "+String.valueOf(rela),rela);
-        data.setValue("impor : "+String.valueOf(impor),impor);
+        data.setValue("Importado : "+String.valueOf(impor),impor);
         
         JFreeChart cha = ChartFactory.createPieChart3D("Distribución por tipo", data,true,true,true);
         

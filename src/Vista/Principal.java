@@ -9,9 +9,13 @@ package Vista;
 import Controlador.InfectadoControlador;
 import Controlador.PersonaContolador;
 import Controlador.RelacionadoControlador;
+import Graficos.Grafico;
+import java.util.ArrayList;
+import modelo.Infectado;
 import modelo.InfectadoDAO;
 import modelo.PersonaDAO;
 import modelo.RelacionadoDAO;
+import org.jfree.chart.ChartPanel;
 
 /**
  *
@@ -23,6 +27,25 @@ public class Principal extends javax.swing.JFrame {
     public Principal() {
         initComponents();
         this.setExtendedState(MAXIMIZED_BOTH);
+        ActualizarGraf();
+    }
+    
+    public void ActualizarGraf(){
+        InfectadoDAO antesList = new InfectadoDAO();
+        ArrayList<Infectado> list = antesList.listadoInf("0");
+        Grafico graf = new Grafico();
+        ChartPanel graficoR = graf.rela(list);
+        ChartPanel graficoE = graf.edad(list);
+        ChartPanel graficoD = graf.rela(list);
+        ChartPanel graficoS = graf.edad(list);
+        jDesktopPane1.add(graficoR);
+        jDesktopPane1.add(graficoE);
+        jDesktopPane1.add(graficoD);
+        jDesktopPane1.add(graficoS);
+       graficoR.setBounds(0 , 0 , 715, 400);
+       graficoE.setBounds(0 , 410, 715, 400);
+       graficoD.setBounds(725 , 0, 715, 400);
+       graficoS.setBounds(725 , 410, 715, 400);
     }
     
     public void agregar(RelacionadoIG vista){
