@@ -227,7 +227,6 @@ public class InfectadoIG extends javax.swing.JInternalFrame {
         dpkFechaDiag = new org.jdesktop.swingx.JXDatePicker();
         cmbEstado = new javax.swing.JComboBox<>();
         cmbTipo = new javax.swing.JComboBox<>();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jButtonRelacionado = new javax.swing.JButton();
 
         setClosable(true);
@@ -378,7 +377,7 @@ public class InfectadoIG extends javax.swing.JInternalFrame {
             }
         });
 
-        cmbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Fallecido", "Grave", "Leve", "Moderado" }));
+        cmbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "", "Fallecido", "Grave", "Leve", "Moderado", "Recuperado" }));
 
         cmbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Importado", "Relacionado" }));
 
@@ -549,7 +548,6 @@ public class InfectadoIG extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> cmbTipo;
     private org.jdesktop.swingx.JXDatePicker dpkFechaDiag;
     private javax.swing.JButton jButtonRelacionado;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
