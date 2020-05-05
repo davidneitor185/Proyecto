@@ -185,6 +185,8 @@ public class InfectadoIG extends javax.swing.JInternalFrame {
         cmbTipo.setSelectedIndex(0);
     }
     
+    
+    
     public int deparSelec(){
         return cmbDepar.getSelectedIndex();
     }

@@ -10,6 +10,7 @@ import Controlador.InfectadoControlador;
 import Controlador.PersonaContolador;
 import Controlador.RelacionadoControlador;
 import Graficos.Grafico;
+import java.awt.event.WindowAdapter;
 import java.util.ArrayList;
 import modelo.Infectado;
 import modelo.InfectadoDAO;
@@ -37,7 +38,7 @@ public class Principal extends javax.swing.JFrame {
         ChartPanel graficoR = graf.rela(list);
         ChartPanel graficoE = graf.edad(list);
         ChartPanel graficoD = graf.departamentos(list);
-        ChartPanel graficoS = graf.edad(list);
+        ChartPanel graficoS = graf.estado(list);
         jDesktopPane1.add(graficoR);
         jDesktopPane1.add(graficoE);
         jDesktopPane1.add(graficoD);
@@ -47,6 +48,8 @@ public class Principal extends javax.swing.JFrame {
        graficoD.setBounds(725 , 0, 715, 400);
        graficoS.setBounds(725 , 410, 715, 400);
     }
+    
+    
     
     public void agregar(RelacionadoIG vista){
         this.add(vista);    
@@ -148,6 +151,14 @@ public class Principal extends javax.swing.JFrame {
             vista.setLocation(x,y);
             vista.setVisible(true);
         }
+        
+        /*vista.addWindowListener(new WindowAdapter() {
+        @Override
+        public void windowClosing(WindowEvent e) {
+            //Hacer lo que yo quiero
+            System.out.println("Estoy cerrando");
+        }
+        }*/
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
