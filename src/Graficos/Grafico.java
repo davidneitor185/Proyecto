@@ -78,14 +78,82 @@ public class Grafico {
             
     }
         DefaultCategoryDataset data= new DefaultCategoryDataset();
-        data.addValue(infancia,"Infancia","0-11 años");
-        data.addValue(adol,"Adolecencia","12 - 18 años");
-        data.addValue(junv,"Juventud","19-26 años");
-        data.addValue(adul,"Adultez","27-64 años");
-        data.addValue(persoM,"Anciano","65+ años");
+        if(dif(infancia)){
+            data.addValue(infancia,"Infancia","0-11 años");
+        }
+        if(dif(adol)){
+            data.addValue(adol,"Adolecencia","12 - 18 años");
+        }
+        if(dif(junv)){
+            data.addValue(junv,"Juventud","19-26 años");
+        }
+        if(dif(adul)){
+            data.addValue(adul,"Adultez","27-64 años");
+        }
+        if(dif(persoM)){
+            data.addValue(persoM,"Anciano","65+ años");
+        }
+        
+        
         
         JFreeChart cha = ChartFactory.createBarChart3D("Distribución por Edad","Edad",
                 "Años", data,PlotOrientation.HORIZONTAL,true,true,true);
+        
+        ChartPanel cp = new ChartPanel(cha);
+        cp.setBounds(500,40,500,400);
+        cp.setVisible(true);
+        
+        return cp;
+    }
+    
+    
+        public ChartPanel estado(ArrayList<Infectado> list){
+        
+        int Leve =0;
+        int Fallecido =0;
+        int Grave =0;
+        int Moderado =0;
+        int Recuperado =0;
+        
+        for(int i =0;i<list.size();i++){
+            if(list.get(i).getEstado().equalsIgnoreCase("Leve")){
+                Leve++;
+            }
+            else if(list.get(i).getEstado().equalsIgnoreCase("Fallecido")){
+                Fallecido++;
+            }
+            else if(list.get(i).getEstado().equalsIgnoreCase("Grave")){
+                Grave++;
+            }
+            else if(list.get(i).getEstado().equalsIgnoreCase("Moderado")){
+                Moderado++;
+            }
+            else if(list.get(i).getEstado().equalsIgnoreCase("Recuperado")){
+                Recuperado++;
+            }
+            
+    }
+        DefaultCategoryDataset data= new DefaultCategoryDataset();
+        if(dif(Leve)){
+            data.addValue(Leve,"Leve","Leve");
+        }
+        if(dif(Fallecido)){
+            data.addValue(Fallecido,"Fallecido","Fallecido");
+        }
+        if(dif(Grave)){
+            data.addValue(Grave,"Grave","Grave");
+        }
+        if(dif(Moderado)){
+            data.addValue(Leve,"Moderado","Moderado");
+        }
+        if(dif(Recuperado)){
+            data.addValue(Recuperado,"Recuperado","Recuperado");
+        }
+        
+        
+        
+        JFreeChart cha = ChartFactory.createLineChart3D("Estado de los Infectados","Estado",
+                "Cantidad", data,PlotOrientation.HORIZONTAL,true,true,true);
         
         ChartPanel cp = new ChartPanel(cha);
         cp.setBounds(500,40,500,400);
