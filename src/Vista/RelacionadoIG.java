@@ -179,6 +179,7 @@ public class RelacionadoIG extends javax.swing.JInternalFrame {
         btnNuevo.setText("Nuevo");
         btnNuevo.setActionCommand("nuevo");
         txtId.setEnabled(true);
+        jTextIdRelacion.setEnabled(true);
         tblPersonas.clearSelection();
         limpiarDatos();
     }
