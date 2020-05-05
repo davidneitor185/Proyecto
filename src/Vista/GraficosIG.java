@@ -6,7 +6,6 @@
 package Vista;
 
 import Graficos.Grafico;
-import static Vista.Principal.jDesktopPane1;
 import java.util.ArrayList;
 import modelo.Infectado;
 import modelo.InfectadoDAO;
