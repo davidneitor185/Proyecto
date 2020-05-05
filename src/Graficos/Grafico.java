@@ -133,7 +133,33 @@ public class Grafico {
             }
             
     }
-        DefaultCategoryDataset data= new DefaultCategoryDataset();
+        DefaultPieDataset data= new DefaultPieDataset();
+        if(dif(Leve)){
+            data.setValue("Leve : "+String.valueOf(Leve),Leve);
+        }
+        if(dif(Fallecido)){
+            data.setValue("Fallecido : "+String.valueOf(Fallecido),Fallecido);
+        }
+        if(dif(Grave)){
+            data.setValue("Grave : "+String.valueOf(Grave),Grave);
+        }
+        if(dif(Moderado)){
+            data.setValue("Moderado : "+String.valueOf(Moderado),Moderado);
+        }
+        if(dif(Recuperado)){
+            data.setValue("Recuperado : "+String.valueOf(Recuperado),Recuperado);
+        }
+        
+        
+        
+        JFreeChart cha = ChartFactory.createRingChart("Distribución por tipo", data,true,true,true);
+        
+        ChartPanel cp = new ChartPanel(cha);
+        cp.setBounds(500,40,500,400);
+        cp.setVisible(true);
+        return cp;
+        
+        /*DefaultCategoryDataset data= new DefaultCategoryDataset();
         if(dif(Leve)){
             data.addValue(Leve,"Leve","Leve");
         }
@@ -144,7 +170,7 @@ public class Grafico {
             data.addValue(Grave,"Grave","Grave");
         }
         if(dif(Moderado)){
-            data.addValue(Leve,"Moderado","Moderado");
+            data.addValue(Moderado,"Moderado","Moderado");
         }
         if(dif(Recuperado)){
             data.addValue(Recuperado,"Recuperado","Recuperado");
@@ -152,14 +178,14 @@ public class Grafico {
         
         
         
-        JFreeChart cha = ChartFactory.createLineChart3D("Estado de los Infectados","Estado",
+        JFreeChart cha = ChartFactory.createBarChart3D("Estado de los Infectados","Estado",
                 "Cantidad", data,PlotOrientation.HORIZONTAL,true,true,true);
         
         ChartPanel cp = new ChartPanel(cha);
         cp.setBounds(500,40,500,400);
         cp.setVisible(true);
         
-        return cp;
+        return cp;*/
     }
     
     public boolean dif(int i){
