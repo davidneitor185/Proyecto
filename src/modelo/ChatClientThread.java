@@ -28,11 +28,11 @@ public class ChatClientThread extends Thread
     public void open(){  
         try{
             canalEntrada  = new DataInputStream(socket.getInputStream());
-       }
+        }
        catch(IOException ioe){
             System.out.println("Error opteniendo el canal de entrada: " + ioe);
             //client.stop();
-       }
+        }
     }
     
     public void close(){

@@ -17,8 +17,8 @@ public class ChatServerThread extends Thread {
     private ChatServer server = null;
     private Socket socket = null;
     private int ID = -1;
-    private DataInputStream streamIn = null;
-    private DataOutputStream streamOut = null;
+    private DataInputStream canalEntrada = null;
+    private DataOutputStream canalSalida = null;
 
     public ChatServerThread(ChatServer server, Socket socket) {
         super();
@@ -29,10 +29,10 @@ public class ChatServerThread extends Thread {
 
     public void send(String msg) {
         try {
-            streamOut.writeUTF(msg);
-            streamOut.flush();
+            canalSalida.writeUTF(msg);
+            canalSalida.flush();
         } catch (IOException ioe) {
-            System.out.println(ID + " ERROR sending: " + ioe.getMessage());
+            System.out.println(ID + " ERROR enviando: " + ioe.getMessage());
             server.remove(ID);
             stop();
         }
@@ -46,7 +46,7 @@ public class ChatServerThread extends Thread {
         System.out.println("Server Thread " + ID + " running.");
         while (true) {
             try {
-                server.handle(ID, streamIn.readUTF());
+                server.handle(ID, canalEntrada.readUTF());
             } catch (IOException ioe) {
                 System.out.println(ID + " ERROR reading: " + ioe.getMessage());
                 server.remove(ID);
@@ -56,17 +56,17 @@ public class ChatServerThread extends Thread {
     }
 
     public void open() throws IOException {
-        streamIn = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
-        streamOut = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+        canalEntrada = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
+        canalSalida = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
     }
 
     public void close() throws IOException {
         if (socket != null) {
             socket.close();
-        } if (streamIn != null) {
-            streamIn.close();
-        } if (streamOut != null) {
-            streamOut.close();
+        } if (canalEntrada != null) {
+            canalEntrada.close();
+        } if (canalSalida != null) {
+            canalSalida.close();
         }
     }
 }

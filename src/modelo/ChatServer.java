@@ -69,6 +69,7 @@ public class ChatServer implements Runnable {
     public synchronized void handle(int ID, String input) {
         if (input.equals("chiao")) {
             clients[buscaClient(ID)].send("chiao");
+            
             remove(ID);
         } else {
             for (int i = 0; i < clientCount; i++) {
@@ -91,7 +92,7 @@ public class ChatServer implements Runnable {
             try {
                 toTerminate.close();
             } catch (IOException ioe) {
-                System.out.println("Error closing thread: " + ioe);
+                System.out.println("Error cerrando hilo: " + ioe);
             }
             toTerminate.stop();
         }
@@ -99,14 +100,14 @@ public class ChatServer implements Runnable {
 
     private void addThread(Socket socket) {
         if (clientCount < clients.length) {
-            System.out.println("Client accepted: " + socket);
+            System.out.println("Cliente aceptado: " + socket);
             clients[clientCount] = new ChatServerThread(this, socket);
             try {
                 clients[clientCount].open();
                 clients[clientCount].start();
                 clientCount++;
             } catch (IOException ioe) {
-                System.out.println("Error opening thread: " + ioe);
+                System.out.println("Error abriendo hilo: " + ioe);
             }
         } else {
             System.out.println("Client refused: maximum " + clients.length + " reached.");

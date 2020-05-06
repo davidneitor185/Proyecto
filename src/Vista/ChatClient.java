@@ -13,7 +13,7 @@ import modelo.*;
  *
  * @author Victor
  */
-public class ChatClient extends javax.swing.JInternalFrame implements Runnable {
+public class ChatClient extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form Cliente
@@ -25,32 +25,18 @@ public class ChatClient extends javax.swing.JInternalFrame implements Runnable {
         entrada("Estableciendo conexion. Por favor espere...");
         try {
             socket = new Socket("127.0.0.1", 9999);
-            entrada("Connected: " + socket);
+            entrada("Connectado. " /*+ socket.getInetAddress().getHostName()*/);
             open();
         } catch (UnknownHostException uhe) {
-            entrada("Host unknown: " + uhe.getMessage());
+            entrada("Servidor desconocido: " + uhe.getMessage());
         } catch (IOException ioe) {
-            entrada("Unexpected exception: " + ioe.getMessage());
-        }
-    }
-
-    @Override
-    public void run() {
-        entrada("Estableciendo conexion. Por favor espere...");
-        try {
-            socket = new Socket("127.0.0.1", 9999);
-            entrada("Connected: " + socket);
-            open();
-        } catch (UnknownHostException uhe) {
-            entrada("Host unknown: " + uhe.getMessage());
-        } catch (IOException ioe) {
-            entrada("Unexpected exception: " + ioe.getMessage());
+            entrada("Excepcion inesperada: " + ioe.getMessage());
         }
     }
 
     public void open() {
         try {
-            streamOut = new DataOutputStream(socket.getOutputStream());
+            canalSalida = new DataOutputStream(socket.getOutputStream());
             cliente = new ChatClientThread(this, socket);
         } catch (IOException ioe) {
             entrada("Error abriendo el canal de salida: " + ioe);
@@ -59,22 +45,22 @@ public class ChatClient extends javax.swing.JInternalFrame implements Runnable {
 
     public void close() {
         try {
-            if (streamOut != null) {
-                streamOut.close();
+            if (canalSalida != null) {
+                canalSalida.close();
             }
             if (socket != null) {
                 socket.close();
             }
         } catch (IOException ioe) {
-            entrada("Error closing ...");
+            entrada("Error cerrando...");
         }
         cliente.close();
         cliente.stop();
     }
 
     public void handle(String msg) {
-        if (msg.equals(".bye")) {
-            entrada("Adios...");
+        if (msg.equals(nombreC + ": chiao")) {
+            entrada("desconectando...");
             close();
         } else {
             entrada(msg);
@@ -84,8 +70,12 @@ public class ChatClient extends javax.swing.JInternalFrame implements Runnable {
     public void enviar() {
         if (!txtaIntro.getText().trim().equals("")) {
             try {
-                streamOut.writeUTF(nombreC + ": " + txtaIntro.getText());
-                streamOut.flush();
+                if (txtaIntro.getText().equalsIgnoreCase("chiao")) {
+                    canalSalida.writeUTF(txtaIntro.getText().trim());
+                } else {
+                    canalSalida.writeUTF(nombreC + ": " + txtaIntro.getText().trim());
+                }
+                canalSalida.flush();
                 txtaIntro.setText("");
             } catch (IOException ioe) {
                 entrada("Error al enviar: " + ioe.getMessage());
@@ -184,8 +174,7 @@ public class ChatClient extends javax.swing.JInternalFrame implements Runnable {
     }//GEN-LAST:event_btnEnvioActionPerformed
 
     private String nombreC;
-    private DataInputStream console = null;
-    private DataOutputStream streamOut = null;
+    private DataOutputStream canalSalida = null;
     private Socket socket = null;
     private ChatClientThread cliente = null;
 
