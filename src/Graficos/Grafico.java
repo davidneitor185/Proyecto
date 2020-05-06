@@ -418,7 +418,111 @@ public class Grafico {
         cp.setVisible(true);
         return cp;
     }
-
+    
+    
+    public ChartPanel fecha(ArrayList<Infectado> list){
+        
+        int enero=0;
+        int febrero=0;
+        int marzo=0;
+        int abril=0;
+        int mayo=0;
+        int junio=0;
+        int julio=0;
+        int agosto=0;
+        int sep=0;
+        int oct=0;
+        int nov=0;
+        int dic=0;
+        
+        for(int i =0;i<list.size();i++){
+            if(list.get(i).getFecha_D().getMonth()==1){
+                enero++;
+            }
+            else if(list.get(i).getFecha_D().getMonth()==2){
+                febrero++;
+            }
+            else if(list.get(i).getFecha_D().getMonth()==3){
+                marzo++;
+            }
+            else if(list.get(i).getFecha_D().getMonth()==4){
+                abril++;
+            }
+            else if(list.get(i).getFecha_D().getMonth()==5){
+                mayo++;
+            }
+            else if(list.get(i).getFecha_D().getMonth()==6){
+                junio++;
+            }
+            else if(list.get(i).getFecha_D().getMonth()==7){
+                julio++;
+            }
+            else if(list.get(i).getFecha_D().getMonth()==8){
+                agosto++;
+            }
+            else if(list.get(i).getFecha_D().getMonth()==9){
+                sep++;
+            }
+            else if(list.get(i).getFecha_D().getMonth()==10){
+                oct++;
+            }
+            else if(list.get(i).getFecha_D().getMonth()==11){
+                nov++;
+            }
+            else if(list.get(i).getFecha_D().getMonth()==12){
+                dic++;
+            }
+            
+    }
+        DefaultCategoryDataset data= new DefaultCategoryDataset();
+        if(dif(enero)){
+            data.addValue(enero,"Enero","enero");
+        }
+        if(dif(febrero)){
+            data.addValue(febrero,"Febrero","Febrero");
+        }
+        if(dif(marzo)){
+            data.addValue(marzo,"Marzo","Marzo");
+        }
+        if(dif(abril)){
+            data.addValue(abril,"Abril","Abril");
+        }
+        if(dif(mayo)){
+            data.addValue(mayo,"Mayo","Mayo");
+        }
+        if(dif(junio)){
+            data.addValue(junio,"Junio","Junio");
+        }
+        if(dif(julio)){
+            data.addValue(julio,"Julio","Julio");
+        }
+        if(dif(agosto)){
+            data.addValue(agosto,"Agosto","Agosto");
+        }
+        if(dif(sep)){
+            data.addValue(sep,"Septiembre","Septiembre");
+        }
+        if(dif(oct)){
+            data.addValue(oct,"Octubre","Octubre");
+        }
+        if(dif(nov)){
+            data.addValue(nov,"Noviembre","Noviembre");
+        }
+        if(dif(dic)){
+            data.addValue(dic,"Diciembre","Diciembre");
+        }
+        
+        
+        
+        JFreeChart cha = ChartFactory.createBarChart3D("Numero de infectados 2020","Mes",
+                "Cantidad", data,PlotOrientation.HORIZONTAL,true,true,true);
+        
+        ChartPanel cp = new ChartPanel(cha);
+        cp.setBounds(500,40,500,400);
+        cp.setVisible(true);
+        
+        return cp;
+    }
     
 }
 
