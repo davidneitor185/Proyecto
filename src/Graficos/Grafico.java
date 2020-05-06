@@ -211,7 +211,7 @@ public class Grafico {
             else if(list.get(i).getDepartamento().equalsIgnoreCase("Atlantico")){
                 Atlantico++;
             }
-            else if(list.get(i).getDepartamento().equalsIgnoreCase("D. C. Santa Fe Bogota")){
+            else if(list.get(i).getDepartamento().equalsIgnoreCase("Bogotá D.C.")){
                 D_C_Santa_Fe_Bogota++;
             }
             else if(list.get(i).getDepartamento().equalsIgnoreCase("Bolivar")){
@@ -274,7 +274,7 @@ public class Grafico {
             else if(list.get(i).getDepartamento().equalsIgnoreCase("Tolima")){
                 Tolima++;
             }
-            else if(list.get(i).getDepartamento().equalsIgnoreCase("Valle")){
+            else if(list.get(i).getDepartamento().equalsIgnoreCase("Valle del Cauca")){
                 Valle++;
             }
             else if(list.get(i).getDepartamento().equalsIgnoreCase("Arauca")){
@@ -315,7 +315,7 @@ public class Grafico {
             data.setValue("Atlantico : "+String.valueOf(Atlantico),Atlantico);
         }
         if(dif(D_C_Santa_Fe_Bogota)){
-            data.setValue("D. C. Santa Fe Bogota : "+String.valueOf(D_C_Santa_Fe_Bogota),D_C_Santa_Fe_Bogota);
+            data.setValue("Bogotá D.C. : "+String.valueOf(D_C_Santa_Fe_Bogota),D_C_Santa_Fe_Bogota);
         }
         if(dif(Bolivar)){
             data.setValue("Bolivar : "+String.valueOf(Bolivar),Bolivar);
@@ -378,7 +378,7 @@ public class Grafico {
             data.setValue("Tolima : "+String.valueOf(Tolima),Tolima);
         }
         if(dif(Valle)){
-            data.setValue("Valle : "+String.valueOf(Valle),Valle);
+            data.setValue("Valle del Cauca : "+String.valueOf(Valle),Valle);
         }
         if(dif(Arauca)){
             data.setValue("Arauca : "+String.valueOf(Arauca),Arauca);
