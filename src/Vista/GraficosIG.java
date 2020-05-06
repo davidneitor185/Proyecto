@@ -28,10 +28,10 @@ public class GraficosIG extends javax.swing.JInternalFrame {
         this.graficoR = graf.rela(list);
         this.graficoE = graf.edad(list);
         this.graficoD = graf.departamentos(list);
-        this.graficoS = graf.estado(list);
-        this.jDesktopPane1.add(graficoR);
-        this.jDesktopPane1.add(graficoE);
-        this.jDesktopPane1.add(graficoD);
+        this.graficoS = graf.fecha(list);
+        //this.jDesktopPane1.add(graficoR);
+        //this.jDesktopPane1.add(graficoE);
+        //this.jDesktopPane1.add(graficoD);
         this.jDesktopPane1.add(graficoS);
         graficoR.setBounds(0, 0, 715, 400);
         graficoE.setBounds(0, 410, 715, 400);

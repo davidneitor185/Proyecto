@@ -40,7 +40,7 @@ public class Principal extends javax.swing.JFrame {
         ChartPanel graficoR = graf.rela(list);
         ChartPanel graficoE = graf.edad(list);
         ChartPanel graficoD = graf.departamentos(list);
-        ChartPanel graficoS = graf.estado(list);
+        ChartPanel graficoS = graf.fecha(list);
         jDesktopPane1.add(graficoR);
         jDesktopPane1.add(graficoE);
         jDesktopPane1.add(graficoD);
