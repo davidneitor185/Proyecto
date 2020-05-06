@@ -133,32 +133,30 @@ public class Grafico {
             }
             
     }
-        DefaultCategoryDataset data= new DefaultCategoryDataset();
+        DefaultPieDataset data= new DefaultPieDataset();
         if(dif(Leve)){
-            data.addValue(Leve,"Leve","Leve");
+            data.setValue("Leve : "+String.valueOf(Leve),Leve);
         }
         if(dif(Fallecido)){
-            data.addValue(Fallecido,"Fallecido","Fallecido");
+            data.setValue("Fallecido : "+String.valueOf(Fallecido),Fallecido);
         }
         if(dif(Grave)){
-            data.addValue(Grave,"Grave","Grave");
+            data.setValue("Grave : "+String.valueOf(Grave),Grave);
         }
         if(dif(Moderado)){
-            data.addValue(Leve,"Moderado","Moderado");
+            data.setValue("Moderado : "+String.valueOf(Moderado),Moderado);
         }
         if(dif(Recuperado)){
-            data.addValue(Recuperado,"Recuperado","Recuperado");
+            data.setValue("Recuperado : "+String.valueOf(Recuperado),Recuperado);
         }
-        
-        
-        
-        JFreeChart cha = ChartFactory.createLineChart("Estado de los Infectados","Estado",
-                "Cantidad", data,PlotOrientation.HORIZONTAL,true,true,true);
-        
+
+
+
+        JFreeChart cha = ChartFactory.createRingChart("Distribución por tipo", data,true,true,true);
+
         ChartPanel cp = new ChartPanel(cha);
         cp.setBounds(500,40,500,400);
         cp.setVisible(true);
-        
         return cp;
     }
     
