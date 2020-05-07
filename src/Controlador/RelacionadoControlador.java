@@ -105,7 +105,6 @@ public class RelacionadoControlador {
                     int num = JOptionPane.showConfirmDialog(vista, "Esta persona ya se encuentra en nuestra base de datos,"
                             + " ¿Desea agregar otra realacion a esta persona?", "confirmacion", existe);
                     if (num == 0) {
-                        
 
                         int resultado = modelo.grabarRelacionado(inf);
 
