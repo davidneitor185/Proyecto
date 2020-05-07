@@ -35,7 +35,7 @@ public class RelacionadoDAO extends PersonaDAO{
             pstm = con.prepareStatement(sql);
             pstm.setString(1, p.getId_focoinfec());
             pstm.setString(2, p.getId_relacionado());
-            pstm.setString(3, p.getFecha());
+            pstm.setDate(3, p.getFecha());
             pstm.setString(4, p.getLugar());
             pstm.setString(5, p.getId());
             rtdo = pstm.executeUpdate();  
@@ -74,7 +74,7 @@ public class RelacionadoDAO extends PersonaDAO{
                     +    "WHERE id_relacionado=?";
             pstm = con.prepareStatement(sql);
             pstm.setString(1, p.getId_focoinfec());
-            pstm.setString(2, p.getFecha());
+            pstm.setDate(2, p.getFecha());
             pstm.setString(3, p.getLugar());
             pstm.setString(4, p.getId_relacionado());
             rtdo = pstm.executeUpdate();  
@@ -167,7 +167,61 @@ public class RelacionadoDAO extends PersonaDAO{
                 relacionado.setNombre(rs.getString("nombre"));
                 relacionado.setId_relacionado(rs.getString("id_relacionado"));
                 relacionado.setId_focoinfec(rs.getString("id_focoinfec"));
-                relacionado.setFecha(rs.getString("fecha"));
+                relacionado.setFecha(rs.getDate("fecha"));
+                relacionado.setLugar(rs.getString("lugar"));
+                listado.add(relacionado);
+            }
+        }
+        catch(SQLException ex){
+            JOptionPane.showMessageDialog(null,"Código : " + 
+                        ex.getErrorCode() + "\nError :" + ex.getMessage());
+        }
+        finally{
+            try{
+                if(rs!=null) rs.close();
+                if(pstm!=null) pstm.close();                
+            }
+            catch(SQLException ex){
+                JOptionPane.showMessageDialog(null,"Código : " + 
+                        ex.getErrorCode() + "\nError :" + ex.getMessage());
+            }
+        }
+        return listado;
+    }
+    
+    public ArrayList<Relacionado> listadoRelacionado2(String id){      
+        Connection con = null;
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        ArrayList<Relacionado> listado = new ArrayList<>();
+        try{
+            con = Fachada.getConnection();
+            String sql="";
+            
+                sql = "SELECT * FROM relacionado JOIN persona on relacionado.id_persona=persona.id WHERE id_persona = ?"
+                    + "ORDER BY id_relacionado";      
+                                    
+            pstm = con.prepareStatement(sql);
+            
+            
+            if(id != "0"){
+                pstm.setString(1, id);
+            }
+            
+            rs = pstm.executeQuery();
+                        
+            Relacionado relacionado = null;
+            while(rs.next()){
+                relacionado = new Relacionado();
+                relacionado.setId(rs.getString("id"));
+                relacionado.setCiudad_O(rs.getString("ciudad_o"));
+                relacionado.setDepartamento(rs.getString("departamento"));
+                relacionado.setSexo(rs.getString("sexo").charAt(0));
+                relacionado.setEdad(rs.getInt("edad"));
+                relacionado.setNombre(rs.getString("nombre"));
+                relacionado.setId_relacionado(rs.getString("id_relacionado"));
+                relacionado.setId_focoinfec(rs.getString("id_focoinfec"));
+                relacionado.setFecha(rs.getDate("fecha"));
                 relacionado.setLugar(rs.getString("lugar"));
                 listado.add(relacionado);
             }

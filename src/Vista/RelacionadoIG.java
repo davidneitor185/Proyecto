@@ -7,6 +7,7 @@
 package Vista;
 
 import java.awt.event.ActionListener;
+import java.sql.Date;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -23,11 +24,14 @@ public class RelacionadoIG extends javax.swing.JInternalFrame {
     /** Creates new form RelacionadoIG2 */
     
     private DefaultTableModel mTabla;
-    
+    private DefaultComboBoxModel mCiudad;
     public RelacionadoIG() {
         initComponents();
         mTabla =(DefaultTableModel) tblPersonas.getModel();
         cmbDepar.setActionCommand("depar");
+        dpkFechaDiag.setFormats("dd-MM-yyyy");
+        cmbDepar.setActionCommand("depar");
+        mCiudad=(DefaultComboBoxModel) cmbCiudad.getModel();
     }
     
       public String getId(){
@@ -48,6 +52,10 @@ public class RelacionadoIG extends javax.swing.JInternalFrame {
         return cmbSexo.getSelectedItem().toString().charAt(0);
     }
     
+    public int getDeparSelected(){
+        return cmbDepar.getSelectedIndex();
+    }
+    
     public String getDepar(){
         return cmbDepar.getSelectedItem().toString();
     }
@@ -56,8 +64,8 @@ public class RelacionadoIG extends javax.swing.JInternalFrame {
         return jTextIdRelacion.getText().trim();
     }
      
-     public String getFecha(){
-        return jTextFecha.getText().trim();
+     public Date getFecha(){
+        return new java.sql.Date(dpkFechaDiag.getDate().getTime());
     }
      
     public String getLugar(){
@@ -103,10 +111,17 @@ public class RelacionadoIG extends javax.swing.JInternalFrame {
         txtId.setText("");
         txtNombre.setText("");
         txtEdad.setText("");
+        jTextIdRelacion.setText("");
+        jTextLugar.setText("");
         cmbSexo.setSelectedIndex(0);
         cmbDepar.setSelectedIndex(0);
         cmbCiudad.setSelectedIndex(0);
         txtNombre.requestFocus();
+        dpkFechaDiag.setDate(null);        
+        }
+    
+    public void addListenerCmbDepar(ActionListener listenPersona){
+        cmbDepar.addActionListener(listenPersona);
     }
     
      public void addListenerBtnNuevo(ActionListener listenPersona){
@@ -150,6 +165,13 @@ public class RelacionadoIG extends javax.swing.JInternalFrame {
         }
         return true;
     }
+     
+     public void cargarMunicipio(ArrayList<String> listMuni){
+        mCiudad.removeAllElements();
+        for (int i=0; i< listMuni.size();i++){
+            mCiudad.addElement(listMuni.get(i));
+      }
+    }
     
     public void cancelarAction (){
         btnBorrar.setEnabled(false);
@@ -157,6 +179,7 @@ public class RelacionadoIG extends javax.swing.JInternalFrame {
         btnNuevo.setText("Nuevo");
         btnNuevo.setActionCommand("nuevo");
         txtId.setEnabled(true);
+        jTextIdRelacion.setEnabled(true);
         tblPersonas.clearSelection();
         limpiarDatos();
     }
@@ -188,14 +211,14 @@ public class RelacionadoIG extends javax.swing.JInternalFrame {
         txtId = new javax.swing.JTextField();
         cmbSexo = new javax.swing.JComboBox<>();
         txtEdad = new javax.swing.JTextField();
-        cmbDepar = new javax.swing.JComboBox<>();
-        cmbCiudad = new javax.swing.JComboBox<>();
         jTextIdRelacion = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jTextLugar = new javax.swing.JTextField();
-        jTextFecha = new javax.swing.JTextField();
+        cmbDepar = new javax.swing.JComboBox<>();
+        cmbCiudad = new javax.swing.JComboBox<>();
+        dpkFechaDiag = new org.jdesktop.swingx.JXDatePicker();
         btnNuevo = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnBorrar = new javax.swing.JButton();
@@ -203,6 +226,7 @@ public class RelacionadoIG extends javax.swing.JInternalFrame {
         tblPersonas = new javax.swing.JTable();
 
         setClosable(true);
+        setAutoscrolls(true);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos del infectado con quien se relacionó"));
 
@@ -238,7 +262,7 @@ public class RelacionadoIG extends javax.swing.JInternalFrame {
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTextCaso, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -277,22 +301,24 @@ public class RelacionadoIG extends javax.swing.JInternalFrame {
         cmbSexo.setEditable(true);
         cmbSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "M", "F" }));
 
-        cmbDepar.setEditable(true);
-        cmbDepar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Amazonas", "Antioquia", "Arauca", "Atlántico", "Bolívar", "Boyacá", "Caldas", "Caquetá", "Casanare", "Cauca", "Cesar", "Chocó", "Córdoba", "Cundinamarca", "Guainía", "Guaviare", "Huila", "La Guajira", "Magdalena", "Meta", "Nariño", "Norte de Santander", "Putumayo", "Quindío", "Risaralda", "San Andrés y Providencia", "Santander", "Sucre", "Tolima", "Valle del Cauca", "Vaupés", "Vichada" }));
+        jLabel1.setText("Id relacionado");
+
+        jLabel5.setText("Fecha de contacto");
+
+        jLabel6.setText("Lugar de contacto");
+
+        cmbDepar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Antioquia", "Atlantico", "D. C. Santa Fe de Bogotá", "Bolivar", "Boyaca", "Caldas", "Caqueta", "Cauca", "Cesar", "Cordova", "Cundinamarca", "Choco", "Huila", "La Guajira", "Magdalena", "Meta", "Nariño", "Norte de Santander", "Quindio", "Risaralda", "Santander", "Sucre", "Tolima", "Valle", "Arauca", "Casanare", "Putumayo", "San Andres", "Amazonas", "Guainia", "Guaviare", "Vaupes", "Vichada" }));
         cmbDepar.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cmbDeparItemStateChanged(evt);
             }
         });
 
-        cmbCiudad.setEditable(true);
-        cmbCiudad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Cualquier ciudad" }));
-
-        jLabel1.setText("Id relacionado");
-
-        jLabel5.setText("Fecha de contacto");
-
-        jLabel6.setText("Lugar de contacto");
+        dpkFechaDiag.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dpkFechaDiagActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panDatosLayout = new javax.swing.GroupLayout(panDatos);
         panDatos.setLayout(panDatosLayout);
@@ -305,10 +331,10 @@ public class RelacionadoIG extends javax.swing.JInternalFrame {
                     .addComponent(lblId)
                     .addComponent(lblDeparta))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(panDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmbDepar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(panDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtId)
+                    .addComponent(txtNombre)
+                    .addComponent(cmbDepar, 0, 150, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(panDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panDatosLayout.createSequentialGroup()
@@ -319,10 +345,10 @@ public class RelacionadoIG extends javax.swing.JInternalFrame {
                         .addComponent(lblSexo)
                         .addGap(18, 18, 18)
                         .addComponent(cmbSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panDatosLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panDatosLayout.createSequentialGroup()
                         .addComponent(lblCiudadO)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cmbCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cmbCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(panDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panDatosLayout.createSequentialGroup()
                         .addGap(10, 10, 10)
@@ -333,10 +359,10 @@ public class RelacionadoIG extends javax.swing.JInternalFrame {
                             .addComponent(jLabel1)
                             .addComponent(jLabel6))))
                 .addGap(18, 18, 18)
-                .addGroup(panDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextIdRelacion, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextLugar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(panDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTextIdRelacion)
+                    .addComponent(jTextLugar)
+                    .addComponent(dpkFechaDiag, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panDatosLayout.setVerticalGroup(
@@ -356,16 +382,16 @@ public class RelacionadoIG extends javax.swing.JInternalFrame {
                     .addComponent(lblEdad)
                     .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(15, 15, 15)
+                    .addComponent(dpkFechaDiag, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(14, 14, 14)
                 .addGroup(panDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDeparta)
-                    .addComponent(cmbDepar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblCiudadO)
-                    .addComponent(cmbCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
-                    .addComponent(jTextLugar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(22, Short.MAX_VALUE))
+                    .addComponent(jTextLugar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbDepar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         btnNuevo.setText("Nuevo");
@@ -409,14 +435,15 @@ public class RelacionadoIG extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(panDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(panDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnBorrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 742, Short.MAX_VALUE))
+                            .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 759, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -424,20 +451,20 @@ public class RelacionadoIG extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(panDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(47, 47, 47)
+                        .addGap(51, 51, 51)
                         .addComponent(btnNuevo)
                         .addGap(18, 18, 18)
                         .addComponent(btnModificar)
                         .addGap(18, 18, 18)
-                        .addComponent(btnBorrar)))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
-                .addContainerGap())
+                        .addComponent(btnBorrar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(panDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         pack();
@@ -447,10 +474,6 @@ public class RelacionadoIG extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreActionPerformed
 
-    private void cmbDeparItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbDeparItemStateChanged
-        int sel = cmbDepar.getSelectedIndex();
-    }//GEN-LAST:event_cmbDeparItemStateChanged
-
     private void tblPersonasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPersonasMouseClicked
         int sel = tblPersonas.getSelectedRow();
         if(sel == -1){
@@ -458,19 +481,31 @@ public class RelacionadoIG extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(this,"No hay registros");
             }
         }else {
-            txtId.setText(tblPersonas.getValueAt(sel, 0).toString());
-            txtId.setEnabled(false);
-            txtNombre.setText(tblPersonas.getValueAt(sel, 1).toString());
-            txtEdad.setText(tblPersonas.getValueAt(sel, 2).toString());
-            cmbSexo.setSelectedItem(tblPersonas.getValueAt(sel, 3).toString());
-            cmbDepar.setSelectedItem(tblPersonas.getValueAt(sel, 4).toString());
-            cmbCiudad.setSelectedItem(tblPersonas.getValueAt(sel, 5).toString());
+            jTextIdRelacion.setText(tblPersonas.getValueAt(sel, 0).toString());            
+            txtId.setText(tblPersonas.getValueAt(sel, 1).toString());
+            txtNombre.setText(tblPersonas.getValueAt(sel, 2).toString());
+            txtEdad.setText(tblPersonas.getValueAt(sel, 3).toString());
+            cmbSexo.setSelectedItem(tblPersonas.getValueAt(sel, 4).toString());
+            cmbDepar.setSelectedItem(tblPersonas.getValueAt(sel, 5).toString());
+            cmbCiudad.setSelectedItem(tblPersonas.getValueAt(sel, 6).toString());
+            dpkFechaDiag.setDate((Date)tblPersonas.getValueAt(sel, 7));
+            jTextLugar.setText(tblPersonas.getValueAt(sel, 8).toString());
             btnModificar.setEnabled(true);
             btnBorrar.setEnabled(true);
             btnNuevo.setText("Cancelar");
             btnNuevo.setActionCommand("cancelar");
+            txtId.setEnabled(false);
+            jTextIdRelacion.setEnabled(false);
         }
     }//GEN-LAST:event_tblPersonasMouseClicked
+
+    private void cmbDeparItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbDeparItemStateChanged
+        int sel = cmbDepar.getSelectedIndex();
+    }//GEN-LAST:event_cmbDeparItemStateChanged
+
+    private void dpkFechaDiagActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dpkFechaDiagActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dpkFechaDiagActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -480,6 +515,7 @@ public class RelacionadoIG extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> cmbCiudad;
     private javax.swing.JComboBox<String> cmbDepar;
     private javax.swing.JComboBox<String> cmbSexo;
+    private org.jdesktop.swingx.JXDatePicker dpkFechaDiag;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -490,7 +526,6 @@ public class RelacionadoIG extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextCaso;
     private javax.swing.JTextField jTextDocumentoInf;
-    private javax.swing.JTextField jTextFecha;
     private javax.swing.JTextField jTextIdRelacion;
     private javax.swing.JTextField jTextLugar;
     private javax.swing.JTextField jTextNombreInf;
