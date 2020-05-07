@@ -106,6 +106,11 @@ public class Principal extends javax.swing.JFrame {
         jMenu1.add(jMenuItem1);
 
         jMenuItem2.setText("Infectado");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem2);
 
         jMenuBar1.add(jMenu1);
@@ -154,33 +159,7 @@ public class Principal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jMenu1ActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        // TODO add your handling code here:
-        InfectadoIG vista = new InfectadoIG();
-        InfectadoDAO modelo = new InfectadoDAO();
-
-        InfectadoControlador controlador = new InfectadoControlador(modelo, vista);
-
-        int x = (jDesktopPane1.getWidth() / 2) - vista.getWidth() /2;
-        int y = (jDesktopPane1.getHeight() / 2) - vista.getHeight() /2;
-
-        if (vista.isShowing()){
-            vista.setLocation(x,y);
-        }
-        else{
-            jDesktopPane1.add(vista);
-            vista.setLocation(x,y);
-            vista.setVisible(true);
-        }
-        
-        /*vista.addWindowListener(new WindowAdapter() {
-        @Override
-        public void windowClosing(WindowEvent e) {
-            //Hacer lo que yo quiero
-            System.out.println("Estoy cerrando");
-        }
-        }*/
-    }                                          
+                                             
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         PersonaIG vista = new PersonaIG();
@@ -220,6 +199,36 @@ public class Principal extends javax.swing.JFrame {
     private void ServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ServerActionPerformed
         ChatServer server = new ChatServer(9999);
     }//GEN-LAST:event_ServerActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+                                           
+        InfectadoIG vista = new InfectadoIG();
+        InfectadoDAO modelo = new InfectadoDAO();
+
+        InfectadoControlador controlador = new InfectadoControlador(modelo, vista);
+
+        int x = (jDesktopPane1.getWidth() / 2) - vista.getWidth() /2;
+        int y = (jDesktopPane1.getHeight() / 2) - vista.getHeight() /2;
+
+        if (vista.isShowing()){
+            vista.setLocation(x,y);
+        }
+        else{
+            jDesktopPane1.add(vista);
+            vista.setLocation(x,y);
+            vista.setVisible(true);
+        }
+        
+        /*vista.addWindowListener(new WindowAdapter() {
+        @Override
+        public void windowClosing(WindowEvent e) {
+            //Hacer lo que yo quiero
+            System.out.println("Estoy cerrando");
+        }
+        }*/
+     
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
