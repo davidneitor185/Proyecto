@@ -41,14 +41,17 @@ public class Principal extends javax.swing.JFrame {
         ChartPanel graficoE = graf.edad(list);
         ChartPanel graficoD = graf.departamentos(list);
         ChartPanel graficoS = graf.fecha(list);
+        ChartPanel graficoW = graf.estado(list);        
         jDesktopPane1.add(graficoR);
         jDesktopPane1.add(graficoE);
         jDesktopPane1.add(graficoD);
         jDesktopPane1.add(graficoS);
-       graficoR.setBounds(0 , 0 , 715, 400);
-       graficoE.setBounds(0 , 410, 715, 400);
-       graficoD.setBounds(725 , 0, 715, 400);
-       graficoS.setBounds(725 , 410, 715, 400);
+        jDesktopPane1.add(graficoW);
+       graficoR.setBounds(30 , 0 , 530, 270);
+       graficoE.setBounds(30 , 272, 530, 270);       
+       graficoW.setBounds(30 , 544, 530, 270);
+       graficoD.setBounds(630 , 0, 750, 400);
+       graficoS.setBounds(630 , 412, 750, 400);
     }
     
     
