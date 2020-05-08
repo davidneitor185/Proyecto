@@ -15,58 +15,98 @@ import java.net.*;
 public class ChatServerThread extends Thread {
 
     private ChatServer server = null;
-    private Socket socket = null;
-    private int ID = -1;
-    private DataInputStream streamIn = null;
-    private DataOutputStream streamOut = null;
+    private Socket socket;
+    private int puerto;
+    private String nombre;
+    private DataInputStream canalEntrada;
+    private DataOutputStream canalSalida;
 
     public ChatServerThread(ChatServer server, Socket socket) {
-        super();
-        this.server = server;
         this.socket = socket;
-        ID = socket.getPort();
-    }
-
-    public void send(String msg) {
+        this.server = server;
+        puerto = socket.getPort();
         try {
-            streamOut.writeUTF(msg);
-            streamOut.flush();
+            canalEntrada = new DataInputStream(socket.getInputStream());
+        } catch (IOException ex) {
+            System.out.println( "ERROR abriendo calnal entrada " + puerto + ": " + ex.getMessage());
+        }
+        try {
+            canalSalida = new DataOutputStream(socket.getOutputStream());
+        } catch (IOException ex) {
+            System.out.println( "ERROR abriendo calnal salida " + puerto + ": " + ex.getMessage());
+        }
+        start();
+
+    }
+    
+    public int getID() {
+        return puerto;
+    }
+     
+
+    public void enviarDatos(int codigo, String mensaje) {
+        try {
+            canalSalida.writeInt(codigo);
+            canalSalida.writeUTF(mensaje);
+            canalSalida.flush();
         } catch (IOException ioe) {
-            System.out.println(ID + " ERROR sending: " + ioe.getMessage());
-            server.remove(ID);
-            stop();
+            System.out.println(nombre + " ERROR enviando: " + ioe.getMessage());
+            //server.remove(puerto);
+            //stop();
         }
     }
 
-    public int getID() {
-        return ID;
+    public String getNombre() {
+        return nombre;
     }
 
     public void run() {
-        System.out.println("Server Thread " + ID + " running.");
-        while (true) {
-            try {
-                server.handle(ID, streamIn.readUTF());
+        System.out.println("Server Thread " + puerto + " running.");
+        while (true) {           
+            try{
+                int codigo= canalEntrada.readInt();
+                String mensaje= canalEntrada.readUTF();
+                switch(codigo){
+                    case 1:
+                        nombre = mensaje;
+                        //MSGestorConexiones.getInstance().enviarTrama(codigo, mensaje);
+                        break;
+                    case 2:
+                        mensaje = nombre + ": " + mensaje;
+                        server.handle(2, mensaje);
+                        //MSGestorConexiones.getInstance().enviarTrama(codigo, mensaje);
+                        break;
+                    case 3:
+                        //MSGestorConexiones.getInstance().desconecta(this);
+                        cerrar();
+                        
+                        break;
+                }
+                
+            }catch(Exception e){
+            
+            
+       
+            
+            /*try {
+                server.handle(ID, canalEntrada.readUTF());
             } catch (IOException ioe) {
                 System.out.println(ID + " ERROR reading: " + ioe.getMessage());
                 server.remove(ID);
                 stop();
-            }
+            }*/
         }
     }
-
-    public void open() throws IOException {
-        streamIn = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
-        streamOut = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
     }
+   
 
-    public void close() throws IOException {
+    public void cerrar() throws IOException {
         if (socket != null) {
             socket.close();
-        } if (streamIn != null) {
-            streamIn.close();
-        } if (streamOut != null) {
-            streamOut.close();
+        } if (canalEntrada != null) {
+            canalEntrada.close();
+        } if (canalSalida != null) {
+            canalSalida.close();
         }
     }
 }

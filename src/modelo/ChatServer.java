@@ -36,9 +36,13 @@ public class ChatServer implements Runnable {
                 System.out.println("Esperando por un cliente...");
                 addThread(server.accept());
             } catch (IOException ioe) {
-                System.out.println("Error de aceptación del servidor: " + ioe);
-                detener();
+                System.out.println("Error de aceptación del servidor: " + ioe.getMessage());
             }
+        }
+        try {
+            server.close();
+        } catch (Exception e) {
+            System.out.println("Error cerrando el servidor: " + e.getMessage());
         }
     }
 
@@ -67,14 +71,15 @@ public class ChatServer implements Runnable {
     }
 
     public synchronized void handle(int ID, String input) {
-        if (input.equals("chiao")) {
+        /*if (input.equals("chiao")) {
             clients[buscaClient(ID)].send("chiao");
+            
             remove(ID);
-        } else {
+        } else {*/
             for (int i = 0; i < clientCount; i++) {
-                clients[i].send(input);
+                clients[i].enviarDatos(ID, input);
             }
-        }
+        //}
     }
 
     public synchronized void remove(int ID) {
@@ -88,28 +93,21 @@ public class ChatServer implements Runnable {
                 }
             }
             clientCount--;
-            try {
+            /*try {
                 toTerminate.close();
             } catch (IOException ioe) {
-                System.out.println("Error closing thread: " + ioe);
+                System.out.println("Error cerrando hilo: " + ioe);
             }
-            toTerminate.stop();
+            toTerminate.stop();*/
         }
     }
 
     private void addThread(Socket socket) {
         if (clientCount < clients.length) {
-            System.out.println("Client accepted: " + socket);
+            System.out.println("Cliente aceptado: " + socket);
             clients[clientCount] = new ChatServerThread(this, socket);
-            try {
-                clients[clientCount].open();
-                clients[clientCount].start();
-                clientCount++;
-            } catch (IOException ioe) {
-                System.out.println("Error opening thread: " + ioe);
-            }
-        } else {
-            System.out.println("Client refused: maximum " + clients.length + " reached.");
+            clientCount++;
         }
     }
+    
 }
