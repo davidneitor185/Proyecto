@@ -38,27 +38,7 @@ public class Principal extends javax.swing.JFrame {
         hilo.start();        
     }
     
-    /*public void ActualizarGraf(){
-        InfectadoDAO antesList = new InfectadoDAO();
-        ArrayList<Infectado> list = antesList.listadoInf("0");
-        Grafico graf = new Grafico();
-        ChartPanel graficoR = graf.rela(list);
-        ChartPanel graficoE = graf.edad(list);
-        ChartPanel graficoD = graf.departamentos(list);
-        ChartPanel graficoS = graf.fecha(list);
-        ChartPanel graficoW = graf.estado(list);        
-        jDesktopPane1.add(graficoR);
-        jDesktopPane1.add(graficoE);
-        jDesktopPane1.add(graficoD);
-        jDesktopPane1.add(graficoS);
-        jDesktopPane1.add(graficoW);
-       graficoR.setBounds(30 , 0 , 530, 270);
-       graficoE.setBounds(30 , 272, 530, 270);       
-       graficoW.setBounds(30 , 544, 530, 270);
-       graficoD.setBounds(630 , 0, 750, 400);
-       graficoS.setBounds(630 , 412, 750, 400);
-    }*/
-    
+        
     
     
     public void agregar(RelacionadoIG vista){
@@ -228,13 +208,7 @@ public class Principal extends javax.swing.JFrame {
             vista.setVisible(true);
         }
         
-        /*vista.addWindowListener(new WindowAdapter() {
-        @Override
-        public void windowClosing(WindowEvent e) {
-            //Hacer lo que yo quiero
-            System.out.println("Estoy cerrando");
-        }
-        }*/
+       
      
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
