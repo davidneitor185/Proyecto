@@ -211,7 +211,7 @@ public class Grafico {
             else if(list.get(i).getDepartamento().equalsIgnoreCase("Atlantico")){
                 Atlantico++;
             }
-            else if(list.get(i).getDepartamento().equalsIgnoreCase("D. C. Santa Fe Bogota")){
+            else if(list.get(i).getDepartamento().equalsIgnoreCase("Bogotá D.C.")){
                 D_C_Santa_Fe_Bogota++;
             }
             else if(list.get(i).getDepartamento().equalsIgnoreCase("Bolivar")){
@@ -274,7 +274,7 @@ public class Grafico {
             else if(list.get(i).getDepartamento().equalsIgnoreCase("Tolima")){
                 Tolima++;
             }
-            else if(list.get(i).getDepartamento().equalsIgnoreCase("Valle")){
+            else if(list.get(i).getDepartamento().equalsIgnoreCase("Valle del Cauca")){
                 Valle++;
             }
             else if(list.get(i).getDepartamento().equalsIgnoreCase("Arauca")){
@@ -436,40 +436,40 @@ public class Grafico {
         int dic=0;
         
         for(int i =0;i<list.size();i++){
-            if(list.get(i).getFecha_D().getMonth()==1){
+            if(list.get(i).getFecha_D().getMonth()==0){
                 enero++;
             }
-            else if(list.get(i).getFecha_D().getMonth()==2){
+            else if(list.get(i).getFecha_D().getMonth()==1){
                 febrero++;
             }
-            else if(list.get(i).getFecha_D().getMonth()==3){
+            else if(list.get(i).getFecha_D().getMonth()==2){
                 marzo++;
             }
-            else if(list.get(i).getFecha_D().getMonth()==4){
+            else if(list.get(i).getFecha_D().getMonth()==3){
                 abril++;
             }
-            else if(list.get(i).getFecha_D().getMonth()==5){
+            else if(list.get(i).getFecha_D().getMonth()==4){
                 mayo++;
             }
-            else if(list.get(i).getFecha_D().getMonth()==6){
+            else if(list.get(i).getFecha_D().getMonth()==5){
                 junio++;
             }
-            else if(list.get(i).getFecha_D().getMonth()==7){
+            else if(list.get(i).getFecha_D().getMonth()==6){
                 julio++;
             }
-            else if(list.get(i).getFecha_D().getMonth()==8){
+            else if(list.get(i).getFecha_D().getMonth()==7){
                 agosto++;
             }
-            else if(list.get(i).getFecha_D().getMonth()==9){
+            else if(list.get(i).getFecha_D().getMonth()==8){
                 sep++;
             }
-            else if(list.get(i).getFecha_D().getMonth()==10){
+            else if(list.get(i).getFecha_D().getMonth()==9){
                 oct++;
             }
-            else if(list.get(i).getFecha_D().getMonth()==11){
+            else if(list.get(i).getFecha_D().getMonth()==10){
                 nov++;
             }
-            else if(list.get(i).getFecha_D().getMonth()==12){
+            else if(list.get(i).getFecha_D().getMonth()==11){
                 dic++;
             }
             

@@ -68,16 +68,27 @@ public class HiloGraficos implements Runnable {
             this.graficoD = graf.departamentos(this.list);
             this.graficoS = graf.fecha(this.list);
             this.graficoW = graf.estado(this.list);
+            graficoR.setVisible(false);
+            graficoE.setVisible(false);
+            graficoW.setVisible(false);
+            graficoD.setVisible(false);
+            graficoS.setVisible(false);
             this.panel.add(graficoR);
             this.panel.add(graficoE);
             this.panel.add(graficoD);
             this.panel.add(graficoS);
             this.panel.add(graficoW);
+            
             graficoR.setBounds(30, 0, 530, 270);
             graficoE.setBounds(30, 272, 530, 270);
             graficoW.setBounds(30, 544, 530, 270);
             graficoD.setBounds(630, 0, 750, 400);
             graficoS.setBounds(630, 412, 750, 400);
+            graficoR.setVisible(true);
+            graficoE.setVisible(true);
+            graficoW.setVisible(true);
+            graficoD.setVisible(true);
+            graficoS.setVisible(true);
             
             try {
                 Thread.sleep(4);
