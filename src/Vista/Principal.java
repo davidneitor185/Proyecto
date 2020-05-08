@@ -166,10 +166,10 @@ public class Principal extends javax.swing.JFrame {
 
     private void menuClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuClienteActionPerformed
         String nombre = JOptionPane.showInputDialog(null,"Por favor ingrese su nombre");
-        ChatClient cliente = new ChatClient (nombre);
+        ChatCliente cliente = new ChatCliente (nombre);
         int x = (jDesktopPane1.getWidth() / 2) - cliente.getWidth() /2;
         int y = (jDesktopPane1.getHeight() / 2) - cliente.getHeight() /2;
-
+        
         if (cliente.isShowing()){
             cliente.setLocation(x,y);
         }
