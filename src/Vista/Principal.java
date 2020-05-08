@@ -14,6 +14,7 @@ import java.awt.event.WindowAdapter;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modelo.ChatServer;
+import modelo.HiloGraficos;
 import modelo.Infectado;
 import modelo.InfectadoDAO;
 import modelo.PersonaDAO;
@@ -30,10 +31,14 @@ public class Principal extends javax.swing.JFrame {
     public Principal() {
         initComponents();
         this.setExtendedState(MAXIMIZED_BOTH);
-        ActualizarGraf();
+        Grafico grafico=new Grafico();
+        
+        Runnable r = new HiloGraficos(grafico, this.jDesktopPane1);
+        Thread hilo = new Thread(r);
+        hilo.start();
     }
     
-    public void ActualizarGraf(){
+    /*public void ActualizarGraf(){
         InfectadoDAO antesList = new InfectadoDAO();
         ArrayList<Infectado> list = antesList.listadoInf("0");
         Grafico graf = new Grafico();
@@ -52,7 +57,7 @@ public class Principal extends javax.swing.JFrame {
        graficoW.setBounds(30 , 544, 530, 270);
        graficoD.setBounds(630 , 0, 750, 400);
        graficoS.setBounds(630 , 412, 750, 400);
-    }
+    }*/
     
     
     
