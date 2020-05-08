@@ -46,16 +46,17 @@ public class HiloGraficos implements Runnable {
         this.panel.add(this.graficoD);
         this.panel.add(this.graficoS);
         this.panel.add(this.graficoW);
-        graficoR.setBounds(30, 0, 530, 270);
-        graficoE.setBounds(30, 272, 530, 270);
-        graficoW.setBounds(30, 544, 530, 270);
-        graficoD.setBounds(630, 0, 750, 400);
-        graficoS.setBounds(630, 412, 750, 400);
+        graficoR.setBounds(0, 0, 530, 270);
+        graficoE.setBounds(0, 272, 530, 270);
+        graficoW.setBounds(0, 544, 530, 270);
+        graficoD.setBounds(535, 0, 905, 475);
+        graficoS.setBounds(535, 478, 905, 338);
     }
 
     @Override
     public void run() {
-        for (int i = 1; i <= 3000; i++) {
+
+        while (true) {
             this.list = this.antesList.listadoInf("0");
             this.panel.remove(this.graficoR);
             this.panel.remove(this.graficoE);
@@ -78,20 +79,20 @@ public class HiloGraficos implements Runnable {
             this.panel.add(graficoD);
             this.panel.add(graficoS);
             this.panel.add(graficoW);
-            
-            graficoR.setBounds(30, 0, 530, 270);
-            graficoE.setBounds(30, 272, 530, 270);
-            graficoW.setBounds(30, 544, 530, 270);
-            graficoD.setBounds(630, 0, 750, 400);
-            graficoS.setBounds(630, 412, 750, 400);
+
+            graficoR.setBounds(0, 0, 530, 270);
+            graficoE.setBounds(0, 272, 530, 270);
+            graficoW.setBounds(0, 544, 530, 270);
+            graficoD.setBounds(535, 0, 905, 475);
+            graficoS.setBounds(535, 478, 905, 338);
             graficoR.setVisible(true);
             graficoE.setVisible(true);
             graficoW.setVisible(true);
             graficoD.setVisible(true);
             graficoS.setVisible(true);
-            
+
             try {
-                Thread.sleep(4);
+                Thread.sleep(5000);
             } catch (InterruptedException ex) {
                 System.out.println("Finalizado");
             }

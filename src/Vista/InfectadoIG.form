@@ -216,40 +216,41 @@
         <Component class="javax.swing.JComboBox" name="cmbDepar">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="33">
-                <StringItem index="0" value="Antioquia"/>
-                <StringItem index="1" value="Atlantico"/>
-                <StringItem index="2" value="Bogot&#xe1; D.C."/>
-                <StringItem index="3" value="Bolivar"/>
-                <StringItem index="4" value="Boyaca"/>
-                <StringItem index="5" value="Caldas"/>
-                <StringItem index="6" value="Caqueta"/>
-                <StringItem index="7" value="Cauca"/>
-                <StringItem index="8" value="Cesar"/>
-                <StringItem index="9" value="Cordova"/>
-                <StringItem index="10" value="Cundinamarca"/>
-                <StringItem index="11" value="Choco"/>
-                <StringItem index="12" value="Huila"/>
-                <StringItem index="13" value="La Guajira"/>
-                <StringItem index="14" value="Magdalena"/>
-                <StringItem index="15" value="Meta"/>
-                <StringItem index="16" value="Nari&#xf1;o"/>
-                <StringItem index="17" value="Norte de Santander"/>
-                <StringItem index="18" value="Quindio"/>
-                <StringItem index="19" value="Risaralda"/>
-                <StringItem index="20" value="Santander"/>
-                <StringItem index="21" value="Sucre"/>
-                <StringItem index="22" value="Tolima"/>
-                <StringItem index="23" value="Valle del Cauca"/>
-                <StringItem index="24" value="Arauca"/>
-                <StringItem index="25" value="Casanare"/>
-                <StringItem index="26" value="Putumayo"/>
-                <StringItem index="27" value="San Andres"/>
-                <StringItem index="28" value="Amazonas"/>
-                <StringItem index="29" value="Guainia"/>
-                <StringItem index="30" value="Guaviare"/>
-                <StringItem index="31" value="Vaupes"/>
-                <StringItem index="32" value="Vichada"/>
+              <StringArray count="34">
+                <StringItem index="0" value="..."/>
+                <StringItem index="1" value="Antioquia"/>
+                <StringItem index="2" value="Atlantico"/>
+                <StringItem index="3" value="Bogot&#xe1; D.C."/>
+                <StringItem index="4" value="Bolivar"/>
+                <StringItem index="5" value="Boyaca"/>
+                <StringItem index="6" value="Caldas"/>
+                <StringItem index="7" value="Caqueta"/>
+                <StringItem index="8" value="Cauca"/>
+                <StringItem index="9" value="Cesar"/>
+                <StringItem index="10" value="Cordova"/>
+                <StringItem index="11" value="Cundinamarca"/>
+                <StringItem index="12" value="Choco"/>
+                <StringItem index="13" value="Huila"/>
+                <StringItem index="14" value="La Guajira"/>
+                <StringItem index="15" value="Magdalena"/>
+                <StringItem index="16" value="Meta"/>
+                <StringItem index="17" value="Nari&#xf1;o"/>
+                <StringItem index="18" value="Norte de Santander"/>
+                <StringItem index="19" value="Quindio"/>
+                <StringItem index="20" value="Risaralda"/>
+                <StringItem index="21" value="Santander"/>
+                <StringItem index="22" value="Sucre"/>
+                <StringItem index="23" value="Tolima"/>
+                <StringItem index="24" value="Valle del Cauca"/>
+                <StringItem index="25" value="Arauca"/>
+                <StringItem index="26" value="Casanare"/>
+                <StringItem index="27" value="Putumayo"/>
+                <StringItem index="28" value="San Andres"/>
+                <StringItem index="29" value="Amazonas"/>
+                <StringItem index="30" value="Guainia"/>
+                <StringItem index="31" value="Guaviare"/>
+                <StringItem index="32" value="Vaupes"/>
+                <StringItem index="33" value="Vichada"/>
               </StringArray>
             </Property>
           </Properties>

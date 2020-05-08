@@ -163,7 +163,7 @@ public class ChatCliente extends javax.swing.JInternalFrame  {
     private void txtaIntroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtaIntroKeyPressed
         if (!txtaIntro.getText().trim().equals("") && cliente != null) {
             btnEnvio.setEnabled(true);
-            txtaEntrada.append("\n" + evt.getKeyCode());
+            //txtaEntrada.append("\n" + evt.getKeyCode());
             if (evt.getKeyCode() == 10) {
                 cliente.enviarDatos(2, txtaIntro.getText().trim());
                 txtaIntro.setText("");

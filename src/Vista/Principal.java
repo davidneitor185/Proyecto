@@ -35,7 +35,7 @@ public class Principal extends javax.swing.JFrame {
         
         Runnable r = new HiloGraficos(grafico, this.jDesktopPane1);
         Thread hilo = new Thread(r);
-        hilo.start();
+        hilo.start();        
     }
     
     /*public void ActualizarGraf(){
