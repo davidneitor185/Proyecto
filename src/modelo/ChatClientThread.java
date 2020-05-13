@@ -62,7 +62,7 @@ public class ChatClientThread extends Thread {
         vista.entrada("Estableciendo conexion. Por favor espere...");
         try {
             socket = new Socket("127.0.0.1", 9999);
-            vista.entrada("Connectado. " /*+ socket.getInetAddress().getHostName()*/);
+            vista.entrada("Connectado. ");
             open();
             conectado = true;
             enviarDatos(1, vista.getNombreC());
@@ -79,7 +79,7 @@ public class ChatClientThread extends Thread {
                         break;
                     case 3:
                         try{
-                            int nPos = Integer.parseInt(mensaje);
+                            //int nPos = Integer.parseInt(mensaje);
                             //ventana.borrarPersona(nPos);
                         }catch(Exception e){
                             JOptionPane.showMessageDialog(vista, "Error al recibir el mensaje: " + e.getMessage());
