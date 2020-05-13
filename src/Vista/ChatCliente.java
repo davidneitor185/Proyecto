@@ -157,18 +157,17 @@ public class ChatCliente extends javax.swing.JInternalFrame  {
             cliente.enviarDatos(3, "");
             cliente.interrupt();
         }
-        cliente = null;
+        cliente.setConectado(false);
     }//GEN-LAST:event_btnDescoActionPerformed
 
     private void txtaIntroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtaIntroKeyPressed
         if (!txtaIntro.getText().trim().equals("") && cliente != null) {
             btnEnvio.setEnabled(true);
-            //txtaEntrada.append("\n" + evt.getKeyCode());
             if (evt.getKeyCode() == 10) {
                 cliente.enviarDatos(2, txtaIntro.getText().trim());
                 txtaIntro.setText("");
                 btnEnvio.setEnabled(false);
-            }else if (txtaIntro.getText().length() == 1 && evt.getKeyCode() == 8)
+            }else if (evt.getKeyCode() == 8 && txtaIntro.getText().length() == 1 )
                 btnEnvio.setEnabled(false);
         }
     }//GEN-LAST:event_txtaIntroKeyPressed

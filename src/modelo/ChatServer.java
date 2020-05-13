@@ -14,7 +14,7 @@ import java.io.*;
 
 public class ChatServer implements Runnable {
 
-    private ChatServerThread clients[] = new ChatServerThread[10];
+    private ChatServerThread clients[] = new ChatServerThread[2];
     private ServerSocket server = null;
     private Thread thread = null;
     private int clientCount = 0;
@@ -85,20 +85,20 @@ public class ChatServer implements Runnable {
     public synchronized void remove(int ID) {
         int pos = buscaClient(ID);
         if (pos >= 0) {
-            ChatServerThread toTerminate = clients[pos];
-            System.out.println("Removing client thread " + ID + " at " + pos);
+            ChatServerThread terminar = clients[pos];
+            System.out.println("Removiendo el cliente con el puerto " + ID + " en posicion " + pos);
             if (pos < clientCount - 1) {
                 for (int i = pos + 1; i < clientCount; i++) {
                     clients[i - 1] = clients[i];
                 }
             }
             clientCount--;
-            /*try {
-                toTerminate.close();
+            try {
+                terminar.cerrar();
             } catch (IOException ioe) {
                 System.out.println("Error cerrando hilo: " + ioe);
             }
-            toTerminate.stop();*/
+            terminar.stop();
         }
     }
 
@@ -107,6 +107,20 @@ public class ChatServer implements Runnable {
             System.out.println("Cliente aceptado: " + socket);
             clients[clientCount] = new ChatServerThread(this, socket);
             clientCount++;
+        }else{
+            DataOutputStream canalSalida = null;
+            try {
+                canalSalida = new DataOutputStream(socket.getOutputStream());
+                canalSalida.writeUTF("Todos nuestros asesores estan ocupados. \nPor favor intente mas tarde");
+            } catch (IOException ex) {
+                System.out.println("Error abriendo canal de salida: " + ex.getMessage());
+            } finally {
+                try {
+                    canalSalida.close();
+                } catch (IOException ex) {
+                    System.out.println("Error cerrando canal de salida: " + ex.getMessage());
+                }
+            }
         }
     }
     

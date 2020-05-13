@@ -6,19 +6,12 @@
 
 package Vista;
 
-import Controlador.InfectadoControlador;
-import Controlador.PersonaContolador;
-import Controlador.RelacionadoControlador;
+import Controlador.*;
 import Graficos.Grafico;
 import java.awt.event.WindowAdapter;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import modelo.ChatServer;
-import modelo.HiloGraficos;
-import modelo.Infectado;
-import modelo.InfectadoDAO;
-import modelo.PersonaDAO;
-import modelo.RelacionadoDAO;
+import modelo.*;
 import org.jfree.chart.ChartPanel;
 
 /**

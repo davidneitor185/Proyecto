@@ -93,7 +93,9 @@ public class ChatClientThread extends Thread {
         }
     }
     
-  
+  public void setConectado(boolean t){
+      this.conectado = t;
+  }
 
     //envia los datos al servidor
     public void enviarDatos(int codigo, String mensaje) {

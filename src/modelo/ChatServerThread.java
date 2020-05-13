@@ -51,8 +51,6 @@ public class ChatServerThread extends Thread {
             canalSalida.flush();
         } catch (IOException ioe) {
             System.out.println(nombre + " ERROR enviando: " + ioe.getMessage());
-            //server.remove(puerto);
-            //stop();
         }
     }
 
@@ -62,41 +60,28 @@ public class ChatServerThread extends Thread {
 
     public void run() {
         System.out.println("Server Thread " + puerto + " running.");
-        while (true) {           
-            try{
-                int codigo= canalEntrada.readInt();
-                String mensaje= canalEntrada.readUTF();
-                switch(codigo){
+        while (true) {            
+            try {
+                int codigo = canalEntrada.readInt();
+                String mensaje = canalEntrada.readUTF();
+                switch (codigo) {
                     case 1:
                         nombre = mensaje;
-                        //MSGestorConexiones.getInstance().enviarTrama(codigo, mensaje);
                         break;
                     case 2:
                         mensaje = nombre + ": " + mensaje;
                         server.handle(2, mensaje);
-                        //MSGestorConexiones.getInstance().enviarTrama(codigo, mensaje);
                         break;
                     case 3:
-                        //MSGestorConexiones.getInstance().desconecta(this);
-                        cerrar();
+                        
+                        server.remove(puerto);
                         
                         break;
                 }
-                
-            }catch(Exception e){
-            
-            
-       
-            
-            /*try {
-                server.handle(ID, canalEntrada.readUTF());
-            } catch (IOException ioe) {
-                System.out.println(ID + " ERROR reading: " + ioe.getMessage());
-                server.remove(ID);
-                stop();
-            }*/
+            } catch (Exception e) {
+                System.out.println(nombre + " ERROR recibiendo: " + e.getMessage());
+            }
         }
-    }
     }
    
 
