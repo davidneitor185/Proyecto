@@ -66,21 +66,20 @@ public class ChatClientThread extends Thread {
             open();
             conectado = true;
             enviarDatos(1, vista.getNombreC());
+            enviarDatos(4, "");
             //enviarDatos(2, tipo(cliente o operario);
             while (conectado) {
                 int codigo = canalEntrada.readInt();
                 String mensaje = canalEntrada.readUTF();
                 switch(codigo){
                     case 1:
-                        //vista.entrada(mensaje);
+                        
                         break;
                     case 2:
                         vista.entrada(mensaje);
                         break;
                     case 3:
                         try{
-                            int nPos = Integer.parseInt(mensaje);
-                            //ventana.borrarPersona(nPos);
                         }catch(Exception e){
                             JOptionPane.showMessageDialog(vista, "Error al recibir el mensaje: " + e.getMessage());
                         }
