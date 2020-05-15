@@ -257,7 +257,7 @@ public class InfectadoIG extends javax.swing.JInternalFrame {
 
         cmbSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "M", "F" }));
 
-        cmbDepar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "...", "Antioquia", "Atlantico", "Bogotá D.C.", "Bolivar", "Boyaca", "Caldas", "Caqueta", "Cauca", "Cesar", "Cordova", "Cundinamarca", "Choco", "Huila", "La Guajira", "Magdalena", "Meta", "Nariño", "Norte de Santander", "Quindio", "Risaralda", "Santander", "Sucre", "Tolima", "Valle del Cauca", "Arauca", "Casanare", "Putumayo", "San Andres", "Amazonas", "Guainia", "Guaviare", "Vaupes", "Vichada" }));
+        cmbDepar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Antioquia", "Atlantico", "Bogotá D.C.", "Bolivar", "Boyaca", "Caldas", "Caqueta", "Cauca", "Cesar", "Cordova", "Cundinamarca", "Choco", "Huila", "La Guajira", "Magdalena", "Meta", "Nariño", "Norte de Santander", "Quindio", "Risaralda", "Santander", "Sucre", "Tolima", "Valle del Cauca", "Arauca", "Casanare", "Putumayo", "San Andres", "Amazonas", "Guainia", "Guaviare", "Vaupes", "Vichada" }));
         cmbDepar.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cmbDeparItemStateChanged(evt);

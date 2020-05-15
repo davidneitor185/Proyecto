@@ -11,16 +11,16 @@ import modelo.*;
  *
  * @author Victor
  */
-public class ChatCliente extends javax.swing.JInternalFrame  {
+public class ChatOperario extends javax.swing.JInternalFrame  {
 
     /**
      * Creates new form Cliente
      */
-    public ChatCliente(String nombreC) {
+    public ChatOperario(String nombreC) {
         initComponents();
         this.nombreC = nombreC;
         lblnombre.setText("Bienvenid@ " + nombreC); 
-        cliente = new ChatClientThread(this);
+        cliente = new ChatOperarioThread(this);
         cliente.start();
         txtaIntro.requestFocus();
     }
@@ -29,7 +29,7 @@ public class ChatCliente extends javax.swing.JInternalFrame  {
         return txtaIntro.getText();
     }
 
-    public void setCliente(ChatClientThread cliente) {
+    public void setCliente(ChatOperarioThread cliente) {
         this.cliente = cliente;
     }
     
@@ -42,6 +42,10 @@ public class ChatCliente extends javax.swing.JInternalFrame  {
     public void entrada(String msg) {
         txtaEntrada.append(msg + "\n");
         txtaEntrada.setCaretPosition(txtaEntrada.getDocument().getLength());
+    }
+    
+    public void limpiar(){
+        txtaEntrada.setText("");
     }
 
     /**
@@ -61,7 +65,7 @@ public class ChatCliente extends javax.swing.JInternalFrame  {
         lblnombre = new javax.swing.JLabel();
         btnSalir = new javax.swing.JButton();
 
-        setTitle("Cliente");
+        setTitle("Operador");
 
         btnEnvio.setText("Enviar");
         btnEnvio.setEnabled(false);
@@ -148,8 +152,8 @@ public class ChatCliente extends javax.swing.JInternalFrame  {
     private void btnEnvioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnvioActionPerformed
         cliente.enviarDatos(2, txtaIntro.getText().trim());
         btnEnvio.setEnabled(false);
-        txtaIntro.setText(null);
-        txtaIntro.requestFocus();
+        txtaIntro.setText("");
+        txtaIntro.requestFocus(true);
     }//GEN-LAST:event_btnEnvioActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -167,13 +171,13 @@ public class ChatCliente extends javax.swing.JInternalFrame  {
                 cliente.enviarDatos(2, txtaIntro.getText().trim());
                 btnEnvio.setEnabled(false);
                 txtaIntro.setText(null);
-            } else if (evt.getKeyCode() == 8 && txtaIntro.getText().length() < 2){
+            } else if (evt.getKeyCode() == 8 && txtaIntro.getText().length() < 2) {
                 btnEnvio.setEnabled(false);
             }
         }
     }//GEN-LAST:event_txtaIntroKeyPressed
     
-    private ChatClientThread cliente = null;
+    private ChatOperarioThread cliente = null;
     private String nombreC;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

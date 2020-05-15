@@ -16,6 +16,8 @@ public class ChatServerThread extends Thread {
 
     private ChatServer server = null;
     private Socket socket;
+    private String tipo;
+    private int puertoC;
     private int puerto;
     private String nombre;
     private DataInputStream canalEntrada;
@@ -25,6 +27,7 @@ public class ChatServerThread extends Thread {
         this.socket = socket;
         this.server = server;
         puerto = socket.getPort();
+        puertoC = 0;
         try {
             canalEntrada = new DataInputStream(socket.getInputStream());
         } catch (IOException ex) {
@@ -39,8 +42,24 @@ public class ChatServerThread extends Thread {
 
     }
     
-    public int getID() {
+    public int getPuerto() {
         return puerto;
+    }
+
+    public int getPuertoC() {
+        return puertoC;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public void setPuertoC(int puertoC) {
+        this.puertoC = puertoC;
+    }
+
+    public String getTipo() {
+        return tipo;
     }
      
 
@@ -51,8 +70,6 @@ public class ChatServerThread extends Thread {
             canalSalida.flush();
         } catch (IOException ioe) {
             System.out.println(nombre + " ERROR enviando: " + ioe.getMessage());
-            //server.remove(puerto);
-            //stop();
         }
     }
 
@@ -62,41 +79,42 @@ public class ChatServerThread extends Thread {
 
     public void run() {
         System.out.println("Server Thread " + puerto + " running.");
-        while (true) {           
-            try{
-                int codigo= canalEntrada.readInt();
-                String mensaje= canalEntrada.readUTF();
-                switch(codigo){
+        while (true) {
+            try {
+                int codigo = canalEntrada.readInt();
+                String mensaje = canalEntrada.readUTF();
+                switch (codigo) {
+                    case 0:
+                        server.pasarOperario(this);
+                        
+                        break;
                     case 1:
                         nombre = mensaje;
-                        //MSGestorConexiones.getInstance().enviarTrama(codigo, mensaje);
+                        tipo = "cliente";
                         break;
                     case 2:
                         mensaje = nombre + ": " + mensaje;
-                        server.handle(2, mensaje);
-                        //MSGestorConexiones.getInstance().enviarTrama(codigo, mensaje);
+                        server.handle(2, mensaje, this);
                         break;
                     case 3:
-                        //MSGestorConexiones.getInstance().desconecta(this);
+                        server.remove(this);
                         cerrar();
+                        break;
+                        
+                    case 4:
+                        if (!server.asignar(this)){
+                            enviarDatos(3, "Nuestros Operarios se encuentran ocupados. "
+                                    + "Por favor intente mas tarde");
+                            server.remove(this);
+                            cerrar();
+                        }
                         
                         break;
                 }
-                
-            }catch(Exception e){
-            
-            
-       
-            
-            /*try {
-                server.handle(ID, canalEntrada.readUTF());
-            } catch (IOException ioe) {
-                System.out.println(ID + " ERROR reading: " + ioe.getMessage());
-                server.remove(ID);
-                stop();
-            }*/
+            } catch (Exception e) {
+                System.out.println(nombre + " ERROR recibiendo mensaje: " + e.getMessage());
+            }
         }
-    }
     }
    
 
@@ -108,5 +126,6 @@ public class ChatServerThread extends Thread {
         } if (canalSalida != null) {
             canalSalida.close();
         }
+        this.stop();
     }
 }

@@ -32,6 +32,7 @@ public class Principal extends javax.swing.JFrame {
         initComponents();
         this.setExtendedState(MAXIMIZED_BOTH);
         Grafico grafico=new Grafico();
+        ChatServer server = new ChatServer(9999);
         
         Runnable r = new HiloGraficos(grafico, this.jDesktopPane1);
         Thread hilo = new Thread(r);
@@ -61,8 +62,8 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         menuAyuda = new javax.swing.JMenu();
         menuChat = new javax.swing.JMenu();
-        menuCliente = new javax.swing.JMenuItem();
-        Server = new javax.swing.JMenuItem();
+        Cliente = new javax.swing.JMenuItem();
+        Operador = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Covid-19 (TODOS MORIREMOS)");
@@ -107,21 +108,21 @@ public class Principal extends javax.swing.JFrame {
 
         menuChat.setText("Chat");
 
-        menuCliente.setText("Cliente");
-        menuCliente.addActionListener(new java.awt.event.ActionListener() {
+        Cliente.setText("Cliente");
+        Cliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuClienteActionPerformed(evt);
+                ClienteActionPerformed(evt);
             }
         });
-        menuChat.add(menuCliente);
+        menuChat.add(Cliente);
 
-        Server.setText("Operador");
-        Server.addActionListener(new java.awt.event.ActionListener() {
+        Operador.setText("Operador");
+        Operador.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ServerActionPerformed(evt);
+                OperadorActionPerformed(evt);
             }
         });
-        menuChat.add(Server);
+        menuChat.add(Operador);
 
         menuAyuda.add(menuChat);
 
@@ -168,25 +169,40 @@ public class Principal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    private void menuClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuClienteActionPerformed
-        String nombre = JOptionPane.showInputDialog(null,"Por favor ingrese su nombre");
-        ChatCliente cliente = new ChatCliente (nombre);
-        int x = (jDesktopPane1.getWidth() / 2) - cliente.getWidth() /2;
-        int y = (jDesktopPane1.getHeight() / 2) - cliente.getHeight() /2;
-        
-        if (cliente.isShowing()){
-            cliente.setLocation(x,y);
-        }
-        else{
-            jDesktopPane1.add(cliente);
-            cliente.setLocation(x,y);
-            cliente.setVisible(true);
-        }
-    }//GEN-LAST:event_menuClienteActionPerformed
+    private void ClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClienteActionPerformed
+        String nombre = JOptionPane.showInputDialog(null, "Por favor ingrese su nombre");
+        if (nombre != null) {
+            ChatCliente cliente = new ChatCliente(nombre);
+            int x = (jDesktopPane1.getWidth() / 2) - cliente.getWidth() / 2;
+            int y = (jDesktopPane1.getHeight() / 2) - cliente.getHeight() / 2;
 
-    private void ServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ServerActionPerformed
-        ChatServer server = new ChatServer(9999);
-    }//GEN-LAST:event_ServerActionPerformed
+            if (cliente.isShowing()) {
+                cliente.setLocation(x, y);
+            } else {
+                jDesktopPane1.add(cliente);
+                cliente.setLocation(x, y);
+                cliente.setVisible(true);
+            }
+        }
+    }//GEN-LAST:event_ClienteActionPerformed
+
+    private void OperadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OperadorActionPerformed
+        //ChatServer server = new ChatServer(9999);
+        String nombre = JOptionPane.showInputDialog(null, "Por favor ingrese su nombre");
+        if (nombre != null) {
+            ChatOperario operario = new ChatOperario(nombre);
+            int x = (jDesktopPane1.getWidth() / 2) - operario.getWidth() / 2;
+            int y = (jDesktopPane1.getHeight() / 2) - operario.getHeight() / 2;
+
+            if (operario.isShowing()) {
+                operario.setLocation(x, y);
+            } else {
+                jDesktopPane1.add(operario);
+                operario.setLocation(x, y);
+                operario.setVisible(true);
+            }
+        }
+    }//GEN-LAST:event_OperadorActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
@@ -248,7 +264,8 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem Server;
+    private javax.swing.JMenuItem Cliente;
+    private javax.swing.JMenuItem Operador;
     public static javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
@@ -256,7 +273,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenu menuAyuda;
     private javax.swing.JMenu menuChat;
-    private javax.swing.JMenuItem menuCliente;
     // End of variables declaration//GEN-END:variables
 
 }

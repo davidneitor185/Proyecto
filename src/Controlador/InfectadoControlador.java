@@ -6,7 +6,6 @@
 package Controlador;
 
 import Vista.InfectadoIG;
-import Vista.Principal;
 import static Vista.Principal.jDesktopPane1;
 import Vista.RelacionadoIG;
 import java.util.ArrayList;
