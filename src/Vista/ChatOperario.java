@@ -11,16 +11,16 @@ import modelo.*;
  *
  * @author Victor
  */
-public class ChatCliente extends javax.swing.JInternalFrame  {
+public class ChatOperario extends javax.swing.JInternalFrame  {
 
     /**
      * Creates new form Cliente
      */
-    public ChatCliente(String nombreC) {
+    public ChatOperario(String nombreC) {
         initComponents();
         this.nombreC = nombreC;
         lblnombre.setText("Bienvenid@ " + nombreC); 
-        cliente = new ChatClientThread(this);
+        cliente = new ChatOperarioThread(this);
         cliente.start();
     }
 
@@ -28,7 +28,7 @@ public class ChatCliente extends javax.swing.JInternalFrame  {
         return txtaIntro.getText();
     }
 
-    public void setCliente(ChatClientThread cliente) {
+    public void setCliente(ChatOperarioThread cliente) {
         this.cliente = cliente;
     }
     
@@ -61,7 +61,7 @@ public class ChatCliente extends javax.swing.JInternalFrame  {
         btnDesco = new javax.swing.JButton();
 
         setClosable(true);
-        setTitle("Cliente");
+        setTitle("Operador");
 
         btnEnvio.setText("Enviar");
         btnEnvio.setEnabled(false);
@@ -171,7 +171,7 @@ public class ChatCliente extends javax.swing.JInternalFrame  {
         }
     }//GEN-LAST:event_txtaIntroKeyPressed
     
-    private ChatClientThread cliente = null;
+    private ChatOperarioThread cliente = null;
     private String nombreC;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

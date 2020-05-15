@@ -62,25 +62,18 @@ public class ChatServer implements Runnable {
 
     }
 
-    private int buscaClient(int puerto) {
-        for (int i = 0; i < clientes.size(); i++) {
-            if (clientes.get(i).getPuerto() == puerto) {
-                return i;
-            }
-        }
-        return -1;
-    }
     
     public synchronized boolean asignar(ChatServerThread cliente){
         if(operarios.size() > 0 ){
             int i = 0;
-            ChatServerThread operario = null;
             while (operarios.get(i).getPuertoC()!= 0 && i <operarios.size()){
                 i++;
             }
             if (i <operarios.size() ){
                 cliente.setPuertoC(operarios.get(i).getPuerto());
                 operarios.get(i).setPuertoC(cliente.getPuerto());
+                cliente.enviarDatos(2, "Bienvenido sera atendido por " + operarios.get(i).getNombre() );
+                operarios.get(i).enviarDatos(2, "Cliente aceptado " + cliente.getNombre());
                 return true;
             }
         }        
@@ -97,35 +90,39 @@ public class ChatServer implements Runnable {
         for (ChatServerThread p : lista) {
             if (p.getPuerto() == cliente.getPuertoC()) {
                 p.enviarDatos(codigo, mensaje);
+                cliente.enviarDatos(codigo, mensaje);
             }
         }
     }
     
-    public synchronized void pasarOperario(int puerto) {
-        int pos = buscaClient(puerto);
-        if (pos >= 0) {
-            ChatServerThread cambio = clientes.get(pos);
-            clientes.remove(pos);
-            System.out.println("cambiando usuario a operarios " + puerto + " en " + pos);
-            operarios.add(cambio);
-        }    
+    public synchronized void pasarOperario(ChatServerThread operario) {
+        clientes.remove(operario);
+        System.out.println("cambiando usuario a operarios " + operario.getPuerto());
+        operario.setTipo("operario");
+        operario.enviarDatos(2, "Esperando por un cliente");
+        operarios.add(operario);
     }
 
     public synchronized void remove(ChatServerThread cliente) {
-        ChatServerThread terminar = cliente;
-        for (ChatServerThread p : operarios) {
-            if (p.getPuerto() == cliente.getPuertoC()) {
-                p.setPuertoC(0);
+        if (cliente.getTipo().equalsIgnoreCase("cliente")){
+            for (ChatServerThread p : operarios) {
+                if (p.getPuerto() == cliente.getPuertoC()) {
+                    p.enviarDatos(2, cliente.getNombre() + " ha dejado la sala. \nEsperando cliente nuevo");
+                    p.setPuertoC(0);
+                }
             }
+            System.out.println("Removiendo hilo " + cliente.getPuerto());
+            clientes.remove(cliente);
+        }else{
+            for (ChatServerThread p : clientes) {
+                if (p.getPuerto() == cliente.getPuertoC()) {
+                    p.setPuertoC(0);
+                }
+            }
+            System.out.println("Removiendo hilo " + cliente.getPuerto());
+            operarios.remove(cliente);
         }
-        System.out.println("Removiendo hilo " + cliente.getPuerto());
-        clientes.remove(cliente);
-        try {
-            terminar.cerrar();
-        } catch (IOException ioe) {
-            System.out.println("Error cerrando hilo: " + ioe);
-        }
-
+        cliente.enviarDatos(2, "Se a desconectado del servidor");
     }
 
     private void addThread(Socket socket) { {

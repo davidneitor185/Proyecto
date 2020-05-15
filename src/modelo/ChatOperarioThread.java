@@ -5,7 +5,7 @@
  */
 package modelo;
 
-import Vista.ChatCliente;
+import Vista.ChatOperario;
 import java.net.*;
 import java.io.*;
 import javax.swing.JOptionPane;
@@ -14,16 +14,16 @@ import javax.swing.JOptionPane;
  *
  * @author Victor
  */
-public class ChatClientThread extends Thread {
+public class ChatOperarioThread extends Thread {
 
     private Socket socket = null;
-    private ChatCliente vista = null;
+    private ChatOperario vista = null;
     private DataInputStream canalEntrada = null;
     private DataOutputStream canalSalida = null;
     private boolean conectado;
 
-    public ChatClientThread(ChatCliente cliente) {
-        this.vista = cliente;
+    public ChatOperarioThread(ChatOperario operador) {
+        this.vista = operador;
     }
     //Abre los canales de entrada y salida del cliente
     public void open() {
@@ -66,7 +66,7 @@ public class ChatClientThread extends Thread {
             open();
             conectado = true;
             enviarDatos(1, vista.getNombreC());
-            enviarDatos(4, "");
+            enviarDatos(0, "");
             while (conectado) {
                 int codigo = canalEntrada.readInt();
                 String mensaje = canalEntrada.readUTF();

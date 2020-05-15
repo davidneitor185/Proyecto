@@ -32,6 +32,7 @@ public class Principal extends javax.swing.JFrame {
         initComponents();
         this.setExtendedState(MAXIMIZED_BOTH);
         Grafico grafico=new Grafico();
+        ChatServer server = new ChatServer(9999);
         
         Runnable r = new HiloGraficos(grafico, this.jDesktopPane1);
         Thread hilo = new Thread(r);
@@ -189,23 +190,38 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void menuClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuClienteActionPerformed
-        String nombre = JOptionPane.showInputDialog(null,"Por favor ingrese su nombre");
-        ChatCliente cliente = new ChatCliente (nombre);
-        int x = (jDesktopPane1.getWidth() / 2) - cliente.getWidth() /2;
-        int y = (jDesktopPane1.getHeight() / 2) - cliente.getHeight() /2;
-        
-        if (cliente.isShowing()){
-            cliente.setLocation(x,y);
-        }
-        else{
-            jDesktopPane1.add(cliente);
-            cliente.setLocation(x,y);
-            cliente.setVisible(true);
+        String nombre = JOptionPane.showInputDialog(null, "Por favor ingrese su nombre");
+        if (nombre != null) {
+            ChatCliente cliente = new ChatCliente(nombre);
+            int x = (jDesktopPane1.getWidth() / 2) - cliente.getWidth() / 2;
+            int y = (jDesktopPane1.getHeight() / 2) - cliente.getHeight() / 2;
+
+            if (cliente.isShowing()) {
+                cliente.setLocation(x, y);
+            } else {
+                jDesktopPane1.add(cliente);
+                cliente.setLocation(x, y);
+                cliente.setVisible(true);
+            }
         }
     }//GEN-LAST:event_menuClienteActionPerformed
 
     private void ServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ServerActionPerformed
-        ChatServer server = new ChatServer(9999);
+        //ChatServer server = new ChatServer(9999);
+        String nombre = JOptionPane.showInputDialog(null, "Por favor ingrese su nombre");
+        if (nombre != null) {
+            ChatOperario operario = new ChatOperario(nombre);
+            int x = (jDesktopPane1.getWidth() / 2) - operario.getWidth() / 2;
+            int y = (jDesktopPane1.getHeight() / 2) - operario.getHeight() / 2;
+
+            if (operario.isShowing()) {
+                operario.setLocation(x, y);
+            } else {
+                jDesktopPane1.add(operario);
+                operario.setLocation(x, y);
+                operario.setVisible(true);
+            }
+        }
     }//GEN-LAST:event_ServerActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed

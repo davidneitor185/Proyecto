@@ -85,11 +85,12 @@ public class ChatServerThread extends Thread {
                 String mensaje = canalEntrada.readUTF();
                 switch (codigo) {
                     case 0:
-                        server.pasarOperario(puerto);
+                        server.pasarOperario(this);
                         
                         break;
                     case 1:
                         nombre = mensaje;
+                        tipo = "cliente";
                         break;
                     case 2:
                         mensaje = nombre + ": " + mensaje;
@@ -97,13 +98,15 @@ public class ChatServerThread extends Thread {
                         break;
                     case 3:
                         server.remove(this);
+                        cerrar();
                         break;
                         
                     case 4:
                         if (!server.asignar(this)){
-                            server.handle(2, "Nuestos Operarios se encuentran ocupados. "
-                                    + "Por favor intente mas tarde", this);
+                            enviarDatos(3, "Nuestros Operarios se encuentran ocupados. "
+                                    + "Por favor intente mas tarde");
                             server.remove(this);
+                            cerrar();
                         }
                         
                         break;
@@ -123,5 +126,6 @@ public class ChatServerThread extends Thread {
         } if (canalSalida != null) {
             canalSalida.close();
         }
+        this.stop();
     }
 }
