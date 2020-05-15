@@ -64,9 +64,10 @@ public class ChatServer implements Runnable {
 
     
     public synchronized boolean asignar(ChatServerThread cliente){
+        boolean r = false;
         if(operarios.size() > 0 ){
             int i = 0;
-            while (operarios.get(i).getPuertoC()!= 0 && i <operarios.size()){
+            while (i != operarios.size() && operarios.get(i).getPuertoC()!= 0){
                 i++;
             }
             if (i <operarios.size() ){
@@ -74,10 +75,10 @@ public class ChatServer implements Runnable {
                 operarios.get(i).setPuertoC(cliente.getPuerto());
                 cliente.enviarDatos(2, "Bienvenido sera atendido por " + operarios.get(i).getNombre() );
                 operarios.get(i).enviarDatos(2, "Cliente aceptado " + cliente.getNombre());
-                return true;
+                r = true;
             }
         }        
-        return false;
+        return r;
     }
  
     public synchronized void handle(int codigo, String mensaje, ChatServerThread cliente) {
