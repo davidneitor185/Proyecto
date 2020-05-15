@@ -22,6 +22,7 @@ public class ChatCliente extends javax.swing.JInternalFrame  {
         lblnombre.setText("Bienvenid@ " + nombreC); 
         cliente = new ChatClientThread(this);
         cliente.start();
+        txtaIntro.requestFocus();
     }
 
     public String salida(){
@@ -58,9 +59,8 @@ public class ChatCliente extends javax.swing.JInternalFrame  {
         jScrollPane2 = new javax.swing.JScrollPane();
         txtaEntrada = new javax.swing.JTextArea();
         lblnombre = new javax.swing.JLabel();
-        btnDesco = new javax.swing.JButton();
+        btnSalir = new javax.swing.JButton();
 
-        setClosable(true);
         setTitle("Cliente");
 
         btnEnvio.setText("Enviar");
@@ -94,10 +94,11 @@ public class ChatCliente extends javax.swing.JInternalFrame  {
         lblnombre.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         lblnombre.setText("Bienvenid@");
 
-        btnDesco.setText("Desconectar");
-        btnDesco.addActionListener(new java.awt.event.ActionListener() {
+        btnSalir.setText("Salir");
+        btnSalir.setRequestFocusEnabled(false);
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDescoActionPerformed(evt);
+                btnSalirActionPerformed(evt);
             }
         });
 
@@ -116,10 +117,9 @@ public class ChatCliente extends javax.swing.JInternalFrame  {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(11, 11, 11)
                                 .addComponent(lblnombre)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnDesco))
+                                .addComponent(btnSalir))
                             .addComponent(jScrollPane2))
                         .addGap(22, 22, 22))))
         );
@@ -129,7 +129,7 @@ public class ChatCliente extends javax.swing.JInternalFrame  {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblnombre)
-                    .addComponent(btnDesco))
+                    .addComponent(btnSalir))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,16 +148,17 @@ public class ChatCliente extends javax.swing.JInternalFrame  {
     private void btnEnvioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnvioActionPerformed
         cliente.enviarDatos(2, txtaIntro.getText().trim());
         btnEnvio.setEnabled(false);
-        txtaIntro.setText("");
+        txtaIntro.setText(null);
+        txtaIntro.requestFocus();
     }//GEN-LAST:event_btnEnvioActionPerformed
 
-    private void btnDescoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescoActionPerformed
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         if (cliente!=null){
             cliente.enviarDatos(3, "");
-            cliente.interrupt();
         }
         cliente = null;
-    }//GEN-LAST:event_btnDescoActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
 
     private void txtaIntroKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtaIntroKeyPressed
         if (!txtaIntro.getText().trim().equals("") && cliente != null) {
@@ -165,9 +166,10 @@ public class ChatCliente extends javax.swing.JInternalFrame  {
             if (evt.getKeyCode() == 10) {
                 cliente.enviarDatos(2, txtaIntro.getText().trim());
                 btnEnvio.setEnabled(false);
-                txtaIntro.setText("");
-            }else if (txtaIntro.getText().length() == 1 && evt.getKeyCode() == 8)
+                txtaIntro.setText(null);
+            } else if (evt.getKeyCode() == 8 && txtaIntro.getText().length() < 2){
                 btnEnvio.setEnabled(false);
+            }
         }
     }//GEN-LAST:event_txtaIntroKeyPressed
     
@@ -175,8 +177,8 @@ public class ChatCliente extends javax.swing.JInternalFrame  {
     private String nombreC;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnDesco;
     private javax.swing.JButton btnEnvio;
+    private javax.swing.JButton btnSalir;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblnombre;

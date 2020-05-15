@@ -72,6 +72,7 @@ public class ChatOperarioThread extends Thread {
                 String mensaje = canalEntrada.readUTF();
                 switch(codigo){
                     case 1:
+                        vista.limpiar();
                         
                         break;
                     case 2:

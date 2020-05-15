@@ -78,7 +78,7 @@ public class ChatClientThread extends Thread {
                         vista.entrada(mensaje);
                         break;
                     case 3:
-                        vista.entrada(mensaje);
+                            vista.entrada(mensaje);
                         close();
                         break;
                 }

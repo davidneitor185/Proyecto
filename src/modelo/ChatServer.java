@@ -107,6 +107,7 @@ public class ChatServer implements Runnable {
         if (cliente.getTipo().equalsIgnoreCase("cliente")){
             for (ChatServerThread p : operarios) {
                 if (p.getPuerto() == cliente.getPuertoC()) {
+                    p.enviarDatos(1, "");
                     p.enviarDatos(2, cliente.getNombre() + " ha dejado la sala. \nEsperando cliente nuevo");
                     p.setPuertoC(0);
                 }
@@ -125,7 +126,7 @@ public class ChatServer implements Runnable {
         cliente.enviarDatos(2, "Se a desconectado del servidor");
     }
 
-    private void addThread(Socket socket) { {
+    private synchronized void addThread(Socket socket) { {
             System.out.println("Cliente aceptado: " + socket);
             clientes.add( new ChatServerThread(this, socket));
         }
